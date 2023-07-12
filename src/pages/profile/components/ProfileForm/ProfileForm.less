@@ -1,0 +1,51 @@
+.profile-form{
+  margin-top: 40px;
+  box-sizing: border-box;
+  padding: 0 0 70px;
+  display: flex;
+  flex-direction: column;
+
+  &__fields{
+    border: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 36px;
+  }
+
+  &__button{
+    width: 280px;
+    background: #000;
+    color: #fff;
+    font-family: 'Inter', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    margin: auto;
+  }
+
+  &__button:disabled{
+    background-color: #A0A0A0;
+  }
+
+  &__button:hover{
+    opacity: 0.8;
+  }
+
+  &__error{
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 400;
+    color: #FF4062;
+    height: 18px;
+    opacity: 0;
+  }
+
+  &__error-visible{
+    opacity: 1;
+  }
+}
+

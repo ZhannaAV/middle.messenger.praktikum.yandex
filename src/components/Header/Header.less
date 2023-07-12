@@ -1,0 +1,30 @@
+.header {
+  min-height: 74px;
+  background-color: #FFF;
+  padding: 0 70px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+
+  &_place_greeting {
+    background-color: rgba(74, 203, 248, 0.8);
+  }
+
+  &_place_sign {
+    background-color: transparent;
+    width: 396px;
+    padding: 40px 0;
+    margin: auto;
+  }
+
+  &__logo {
+    width: 38px;
+    height: 38px;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+
+  &__logo:hover {
+    filter: drop-shadow(0 0 2em black);
+  }
+}
