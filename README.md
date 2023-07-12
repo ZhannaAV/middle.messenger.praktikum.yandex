@@ -1,11 +1,14 @@
-## My messenger
+## My messenger 
 
 ---
 Education project: SPA without any frameworks.
 
 ### Description
 Typical messenger application for browser version.
+
 *[Link to basic prototype](https://www.figma.com/file/pgU5gTbP2YShOwlv8Skawl/Chat_external_link-(Copy)?type=design&node-id=0-1&mode=design&t=M9uhj5iECtbi3gPc-0)*
+
+*[Link to Netlify](https://my-messenger-for-fun.netlify.app/)*
 
 ### Tech stack
 
@@ -19,12 +22,12 @@ Typical messenger application for browser version.
 
 ### Links to pages
 
-- «[Главная](https://github.com/facebook/react)»,
-- «[Sign in](https://github.com/labstack/echo)»,
-- «[Sign up](https://github.com/webpack/webpack)»,
-- «[Chats](https://github.com/taosdata/TDengine)»,
-- «[Profile](https://github.com/vladpereskokov/soul-hunting/)».
-- «[Profile/edit](https://github.com/vladpereskokov/soul-hunting/)».
-- «[Profile/changePassword](https://github.com/vladpereskokov/soul-hunting/)».
-- «[404](https://github.com/vladpereskokov/soul-hunting/)».
-- «[500](https://github.com/vladpereskokov/soul-hunting/)».
+- *[Главная](https://my-messenger-for-fun.netlify.app/)*,
+- *[Sign in](https://my-messenger-for-fun.netlify.app/signin)*,
+- *[Sign up](https://my-messenger-for-fun.netlify.app/signup)*,
+- *[Chats](https://my-messenger-for-fun.netlify.app/chats)*,
+- *[Profile](https://my-messenger-for-fun.netlify.app/profile)*.
+- *[Profile/edit](https://my-messenger-for-fun.netlify.app/profile/edit)*.
+- *[Profile/changePassword](https://my-messenger-for-fun.netlify.app/profile/changePassword)*.
+- *[404](https://my-messenger-for-fun.netlify.app/404)*.
+- *[500](https://my-messenger-for-fun.netlify.app/500)*.
