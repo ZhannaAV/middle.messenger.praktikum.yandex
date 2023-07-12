@@ -9,6 +9,8 @@ import {ChangePassword} from "./pages/profile/modules/changePassword/changePassw
 import {Chats} from "./pages/chats/chats";
 import {managePopup, Popup} from "./components/Popup/Popup";
 import {manageChat} from "./pages/chats/components/Chat/Chat";
+import {NotFoundPage} from "./pages/notFound/notFoundPage";
+import {ServerErrorPage} from "./pages/serverError/serverError";
 
 const app = document.querySelector('#app');
 app.insertAdjacentHTML('afterend',Popup);
@@ -51,6 +53,9 @@ if (window.location.pathname === '/chats') {
     app.innerHTML = Chats
     manageChat(openPopup)
 }
+if (window.location.pathname === '/404') app.innerHTML = NotFoundPage
+if (window.location.pathname === '/500') app.innerHTML = ServerErrorPage
+
 
 
 

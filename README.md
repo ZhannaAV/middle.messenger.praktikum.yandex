@@ -26,3 +26,5 @@ Typical messenger application for browser version.
 - «[Profile](https://github.com/vladpereskokov/soul-hunting/)».
 - «[Profile/edit](https://github.com/vladpereskokov/soul-hunting/)».
 - «[Profile/changePassword](https://github.com/vladpereskokov/soul-hunting/)».
+- «[404](https://github.com/vladpereskokov/soul-hunting/)».
+- «[500](https://github.com/vladpereskokov/soul-hunting/)».
