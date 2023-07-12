@@ -1,0 +1,41 @@
+.message {
+  max-width: 400px;
+  width: fit-content;
+  min-width: 60px;
+  padding: 5px;
+  border-radius: 4px;
+
+  &+& {
+    margin-top: 10px;
+  }
+
+  &_location_left {
+    align-self: start;
+    background-color: #EFEFEF;
+    border-top-left-radius: 0;
+  }
+
+  &_location_right {
+   align-self: end;
+    background-color: rgba(245, 226, 39, 0.56);
+    border-bottom-right-radius: 0;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 12px;
+  }
+
+  &__teh-info {
+    margin-top: 2px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+  }
+
+  &__time {
+    font-size: 9px;
+    color: #999;
+    text-align: right;
+  }
+}
