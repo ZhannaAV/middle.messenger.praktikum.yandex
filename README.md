@@ -22,7 +22,7 @@ Typical messenger application for browser version.
 
 ### Links to pages
 
-- *[Главная](https://my-messenger-for-fun.netlify.app/)*,
+- *[Home](https://my-messenger-for-fun.netlify.app/)*,
 - *[Sign in](https://my-messenger-for-fun.netlify.app/signin)*,
 - *[Sign up](https://my-messenger-for-fun.netlify.app/signup)*,
 - *[Chats](https://my-messenger-for-fun.netlify.app/chats)*,

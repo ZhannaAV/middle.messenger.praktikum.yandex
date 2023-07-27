@@ -1,0 +1,9 @@
+/dist
+/node_modules
+/public
+/.github
+.editorconfig
+.nvmrc
+.gitignore
+vite.config.js
+server.js

@@ -1,4 +1,7 @@
 .field {
+  display: flex;
+  flex-direction: column;
+
   &__label {
     font-size: 10px;
     line-height: 12px;
@@ -21,11 +24,11 @@
     overflow: hidden;
   }
 
-  &__input:focus{
+  &__input:focus {
     outline: none;
   }
 
-  &__input-error{
+  &__input-error {
     font-size: 10px;
     line-height: 12px;
     font-weight: 400;
@@ -34,7 +37,7 @@
     opacity: 0;
   }
 
-  &__input-error_visible{
+  &__input-error_visible {
     opacity: 1;
   }
 }
