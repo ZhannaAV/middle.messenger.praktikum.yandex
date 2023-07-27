@@ -6,11 +6,10 @@ export const templator = (tmpl, children = null): Node => {
       .forEach(([titleComponent, component]) => {
         const el = fragment.querySelector(`[data-${titleComponent}]`);
         if (Array.isArray(component)) {
-          component.reverse().forEach((comp) => el.after(comp));
+          component.reverse().forEach((comp) => el.after(comp.getContent()));
           el.remove();
         } else {
-          console.log(component);
-          el.replaceWith(component as Node);
+          el.replaceWith(component.getContent() as Node);
         }
       });
   }

@@ -31,8 +31,8 @@ export const FormSignin = new SignForm({
   ...formSigninConfig,
   children: {
     fields: [
-      new SignFormField(fieldTypeConfig.login).getContent(),
-      new SignFormField(fieldTypeConfig.password).getContent(),
+      new SignFormField(fieldTypeConfig.login),
+      new SignFormField(fieldTypeConfig.password),
     ],
   },
   events: {
@@ -43,19 +43,19 @@ export const FormSignin = new SignForm({
       console.log(elements.password.value);
     },
   },
-}).getContent();
+});
 
 export const FormSignup = new SignForm({
   ...formSignupConfig,
   children: {
     fields: [
-      new SignFormField(fieldTypeConfig.email).getContent(),
-      new SignFormField(fieldTypeConfig.login).getContent(),
-      new SignFormField(fieldTypeConfig.name).getContent(),
-      new SignFormField(fieldTypeConfig.surname).getContent(),
-      new SignFormField(fieldTypeConfig.phone).getContent(),
-      new SignFormField(fieldTypeConfig.password).getContent(),
-      new SignFormField(fieldTypeConfig.passwordAgain).getContent(),
+      new SignFormField(fieldTypeConfig.email),
+      new SignFormField(fieldTypeConfig.login),
+      new SignFormField(fieldTypeConfig.name),
+      new SignFormField(fieldTypeConfig.surname),
+      new SignFormField(fieldTypeConfig.phone),
+      new SignFormField(fieldTypeConfig.password),
+      new SignFormField(fieldTypeConfig.passwordAgain),
     ]
   },
   events: {
@@ -65,4 +65,4 @@ export const FormSignup = new SignForm({
       console.log(elements.login.value);
     },
   },
-}).getContent();
+});

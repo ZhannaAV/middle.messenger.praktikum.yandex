@@ -11,6 +11,6 @@ export class Home extends Block {
 
 export const HomePage = new Home({
   children: {
-    header: new Header({ place: 'place_greeting' }).getContent(),
+    header: new Header({ place: 'place_greeting' }),
   },
 });

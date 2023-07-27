@@ -12,7 +12,7 @@ const config = {
 export const SignupPage = new SignPage({
   ...config,
   children: {
-    header: new Header({ place: 'place_sign' }).getContent(),
+    header: new Header({ place: 'place_sign' }),
     form: FormSignup,
   },
-}).getContent();
+});

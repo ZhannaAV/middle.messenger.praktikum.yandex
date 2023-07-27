@@ -18,8 +18,8 @@ export const openPopup = managePopup();
 // console.log(FormSignin);
 
 if (window.location.pathname === '/') app.replaceWith(HomePage.getContent());
-if (window.location.pathname === '/signin') app.replaceWith(SigninPage);
-if (window.location.pathname === '/signup') app.replaceWith(SignupPage);
+if (window.location.pathname === '/signin') app.replaceWith(SigninPage.getContent());
+if (window.location.pathname === '/signup') app.replaceWith(SignupPage.getContent());
 if (window.location.pathname === '/profile') app.innerHTML = Profile;
 if (window.location.pathname === '/profile/edit') app.innerHTML = EditProfile;
 if (window.location.pathname === '/profile/changePassword') app.innerHTML = ChangePassword;
