@@ -39,8 +39,8 @@ export const FormSignin: Block = new SignForm({
     ],
   },
   events: {
-    submit: (e) => validateForm(e),
-    focusout: (e) => validateField(e),
+    submit: (e:Event) => validateForm(e),
+    focusout: (e:Event) => validateField(e),
   },
 });
 

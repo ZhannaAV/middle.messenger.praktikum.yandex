@@ -16,3 +16,7 @@ export interface IFormField {
   pattern?: string;
   value?: string;
 }
+
+export type TEvent<T extends HTMLElement = HTMLElement> = Event & {
+  target: T
+}

@@ -23,12 +23,12 @@ export const messages = [
   },
 ];
 
-const markList = {
+const markList: Record<string, string> = {
   hasGet: '/public/HasGetMark.svg',
   hasRead: '/public/HasReadMark.svg',
 };
 
-export const convertData = (obj): IMessage => ({
+export const convertData = (obj: Record<string, any>): IMessage => ({
   isIncoming: obj.isIncoming,
   text: obj.text,
   time: obj.time,

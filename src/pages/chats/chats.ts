@@ -2,12 +2,12 @@ import { layoutTmpl } from './components/Layout/layout.tmpl';
 import { Chat } from './components/Chat/Chat';
 import { ChatTag, ChatTagList } from './components/ChatTag/ChatTag';
 import { Block } from '../../utils/block';
-import { IChildren } from '../../models/models';
+import { IChildren, TEvent } from '../../models/models';
 import { templator } from '../../utils/templator';
 import { Popup } from '../../components/Popup/Popup';
 
 class Chats extends Block<IChildren> {
-  protected manageChat(e): void {
+  protected manageChat(e:TEvent): void {
     const menu = document.querySelector('.chat__menu_type_header');
     const attachMenu = document.querySelector('.chat__menu_type_attach');
 
@@ -36,11 +36,11 @@ class Chats extends Block<IChildren> {
       chatTitle: ChatTagList.find((item) => item.isActive === true).chatTitle,
       children: {},
       events: {
-        submit: (e) => {
+        submit: (e:TEvent) => {
           e.preventDefault();
-          console.log(e.target.children.message.value);
+          console.log((e.target.children as any).message.value);
         },
-        click: (e) => this.manageChat(e),
+        click: (e:TEvent) => this.manageChat(e),
       }
     });
   }

@@ -12,7 +12,7 @@ export class Block<P extends Record<string, any> = any> {
 
   protected props: P;
 
-  _element = null;
+  _element: HTMLElement = null;
 
   /**
    * @param {Object} props
@@ -31,10 +31,10 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _registerEvents(eventBus) {
+  private _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
-    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, (this._componentDidUpdate as () => void).bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -60,7 +60,8 @@ export class Block<P extends Record<string, any> = any> {
       .emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(oldProps: unknown, newProps: unknown) {
+    this._removeEvents();
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this.eventBus()
@@ -69,11 +70,11 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   // Может переопределять пользователь, необязательно трогать
-  protected componentDidUpdate(oldProps, newProps) {
+  protected componentDidUpdate(oldProps: unknown, newProps: unknown) {
     return true;
   }
 
-  public setProps = (nextProps) => {
+  public setProps = (nextProps: Record<string, any>) => {
     if (!nextProps) {
       return;
     }
@@ -94,14 +95,25 @@ export class Block<P extends Record<string, any> = any> {
       });
   }
 
+  private _removeEvents() {
+    const { events = {} } = this.props as P & { events: Record<string, () => void> };
+
+    Object.keys(events)
+      .forEach((eventName) => {
+        this._element?.removeEventListener(eventName, events[eventName]);
+      });
+  }
+
   private _render() {
-    this._element = this.render();
+    const el: unknown = this.render();
+    this._element = el as HTMLElement;
 
     this._addEvents();
   }
 
   // Может переопределять пользователь, необязательно трогать
   protected render() {
+
   }
 
   public getContent() {
@@ -110,11 +122,11 @@ export class Block<P extends Record<string, any> = any> {
 
   private _makePropsProxy(props: P) {
     return new Proxy(props, {
-      get(target, prop) {
+      get(target: Record<string, any>, prop: string) {
         const value = target[prop];
-        return typeof value === 'function' ? value.bind(target) : value;
+        return typeof value === 'function' ? (value as () => void).bind(target) : value;
       },
-      set(target, prop, value) {
+      set(target: Record<string, any>, prop: string, value: unknown) {
         const oldTarget = { ...target };
 
         target[prop] = value;
@@ -131,7 +143,9 @@ export class Block<P extends Record<string, any> = any> {
     } as any);
   }
 
-  public show() {}
+  public show() {
+  }
 
-  public hide() {}
+  public hide() {
+  }
 }

@@ -26,7 +26,7 @@ export const validateField = (event: Event): void => {
 export const validateForm = (event: Event): void => {
   event.preventDefault();
   const { elements } = event.currentTarget as HTMLFormElement;
-  const filledInputs = {};
+  const filledInputs: Record<string, string> = {};
   const isValidForm = Array.from(elements)
     .reduce((isValid, el) => {
       if (el instanceof HTMLInputElement) {

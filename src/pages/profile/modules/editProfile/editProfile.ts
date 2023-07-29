@@ -4,6 +4,7 @@ import { ProfileLayout } from '../../components/ProfileLayout/ProfileLayout';
 import { inputTypeConfig } from '../../../../constants/inputTypeConfig';
 import { Block } from '../../../../utils/block';
 import { validateField, validateForm } from '../../../../utils/validation';
+import { TEvent } from '../../../../models/models';
 
 const editProfileConfig = {
   formName: 'edit-profile-form',
@@ -25,8 +26,8 @@ export const EditProfilePage: Block = new ProfileLayout({
         ]
       },
       events: {
-        submit: (e) => validateForm(e),
-        focusout: (e) => validateField(e),
+        submit: (e: TEvent) => validateForm(e),
+        focusout: (e: TEvent) => validateField(e),
       }
     })
   }

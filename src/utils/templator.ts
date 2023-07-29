@@ -1,6 +1,6 @@
 import { Block } from './block';
 
-export const templator = (tmpl: string, children: Record<string, Block | Block[]> = null): Node => {
+export const templator = (tmpl: string, children: Record<string, Block | Block[]> = null): HTMLElement => {
   const fragment = document.createElement('div');
   fragment.innerHTML = tmpl;
   if (children) {
@@ -15,5 +15,5 @@ export const templator = (tmpl: string, children: Record<string, Block | Block[]
         }
       });
   }
-  return fragment.firstElementChild;
+  return fragment.firstElementChild as HTMLElement;
 };

@@ -1,4 +1,4 @@
-export const errors = {
+export const errors: Record<string, string> = {
   email: 'Format like example@email.com',
   login: 'from 3 to 20 characters, Latin (hyphens and underscores are allowed), can contain numbers, but not consist of them ',
   phone: 'from 10 to 15 numbers, can start with a plus',

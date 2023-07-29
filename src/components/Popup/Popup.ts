@@ -29,8 +29,8 @@ export const Popup: Block = new PopupClass({
   btnText: '',
   children: {},
   events: {
-    click: (e): void => {
-      if (e.target.name === 'closeBtn') {
+    click: (e:Event): void => {
+      if ((e.target as HTMLTextAreaElement).name === 'closeBtn') {
         Popup.hide();
       }
     }

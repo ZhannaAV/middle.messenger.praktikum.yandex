@@ -15,11 +15,11 @@
     "noEmit": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "sourceMap": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
   },
   "include": [
     "src"

@@ -4,6 +4,7 @@ import { Block } from '../../../../utils/block';
 import { ProfileInputField } from '../../components/ProfileInputField/ProfileInputField';
 import { inputTypeConfig } from '../../../../constants/inputTypeConfig';
 import { validateField, validateForm } from '../../../../utils/validation';
+import { TEvent } from '../../../../models/models';
 
 const passwordProfileFormConfig = {
   formName: 'passwordProfile-profile-form',
@@ -16,14 +17,17 @@ export const PasswordProfilePage: Block = new ProfileLayout({
       ...passwordProfileFormConfig,
       children: {
         fields: [
-          new ProfileInputField({ ...inputTypeConfig.password, label: 'Old passwordProfile' }),
+          new ProfileInputField({
+            ...inputTypeConfig.password,
+            label: 'Old passwordProfile'
+          }),
           new ProfileInputField(inputTypeConfig.newPassword),
           new ProfileInputField(inputTypeConfig.repeatNewPasswordConfig),
         ]
       },
       events: {
-        submit: (e) => validateForm(e),
-        focusout: (e) => validateField(e),
+        submit: (e: TEvent) => validateForm(e),
+        focusout: (e: TEvent) => validateField(e),
       }
     })
   }
