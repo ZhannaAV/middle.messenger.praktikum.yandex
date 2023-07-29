@@ -1,6 +1,8 @@
-import { chatTagTmpl } from './chatTag.tmpl';
+import { chatTagTmpl, IChatTag } from './chatTag.tmpl';
+import { Block } from '../../../../utils/block';
+import { templator } from '../../../../utils/templator';
 
-export const ChatList = [
+export const ChatTagList = [
   {
     chatAvatar: '/public/logo.svg',
     chatTitle: 'Vadim',
@@ -27,4 +29,8 @@ export const ChatList = [
   },
 ];
 
-export const ChatTagList = ChatList.reduce((acc, item) => acc + chatTagTmpl(item), '');
+export class ChatTag extends Block<IChatTag> {
+  protected render() {
+    return templator(chatTagTmpl(this.props));
+  }
+}

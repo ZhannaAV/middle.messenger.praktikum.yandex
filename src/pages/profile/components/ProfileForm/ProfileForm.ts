@@ -1,22 +1,16 @@
-import { profileFormTmpl } from './profileForm.tmpl';
+import { IProfileForm, profileFormTmpl } from './profileForm.tmpl';
+import { Block } from '../../../../utils/block';
+import { templator } from '../../../../utils/templator';
+import { IChildren } from '../../../../models/models';
 
-const editProfileConfig = {
-  formName: 'edit-profile-form',
-  isError: false,
-  isDisabled: false,
-};
+type TEditProfileForm = IProfileForm & IChildren;
 
-const changePasswordProfileConfig = {
-  formName: 'password-profile-form',
-  isError: false,
-  isDisabled: false,
-};
-
-export const EditProfileForm = (fields) => profileFormTmpl({
-  ...editProfileConfig,
-  fields,
-});
-export const ChangePasswordProfileForm = (fields) => profileFormTmpl({
-  ...changePasswordProfileConfig,
-  fields,
-});
+export class ProfileForm extends Block<TEditProfileForm> {
+  protected render() {
+    const {
+      children,
+      ...params
+    } = this.props;
+    return templator(profileFormTmpl(params), children);
+  }
+}

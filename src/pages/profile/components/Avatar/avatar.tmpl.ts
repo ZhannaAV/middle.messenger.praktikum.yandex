@@ -1,9 +1,9 @@
 import './Avatar.less';
 
 // language=html
-export const avatarTmpl = (avatar) => `
+export const avatarTmpl = (): string => `
   <button class="avatar">
-    <img class="avatar__img ${!avatar && 'avatar__img_default'}" src=${avatar || '/public/logo.svg'}
+    <img class="avatar__img" src='/public/logo.svg'
          alt="avatar">
     <span class="avatar__btn-text">Change avatar</span>
   </button>

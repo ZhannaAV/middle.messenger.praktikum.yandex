@@ -1,4 +1,6 @@
-export const templator = (tmpl, children = null): Node => {
+import { Block } from './block';
+
+export const templator = (tmpl: string, children: Record<string, Block | Block[]> = null): Node => {
   const fragment = document.createElement('div');
   fragment.innerHTML = tmpl;
   if (children) {

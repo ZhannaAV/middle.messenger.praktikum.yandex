@@ -25,6 +25,8 @@
     "no-param-reassign": "off",
     "no-console": "off",
     "comma-dangle": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": 2,
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "import/extensions": ["error", "ignorePackages", {

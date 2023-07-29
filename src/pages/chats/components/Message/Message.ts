@@ -1,6 +1,8 @@
-import { messageTmpl } from './message.tmpl';
+import { IMessage, messageTmpl } from './message.tmpl';
+import { Block } from '../../../../utils/block';
+import { templator } from '../../../../utils/templator';
 
-const messages = [
+export const messages = [
   {
     text: 'Hello!',
     time: '16:01',
@@ -26,9 +28,15 @@ const markList = {
   hasRead: '/public/HasReadMark.svg',
 };
 
-export const messageList = messages.reduce((acc, mess) => acc + messageTmpl({
-  isIncoming: mess.isIncoming,
-  text: mess.text,
-  time: mess.time,
-  mark: mess.status && markList[mess.status],
-}), '');
+export const convertData = (obj): IMessage => ({
+  isIncoming: obj.isIncoming,
+  text: obj.text,
+  time: obj.time,
+  mark: obj.status && markList[obj.status],
+});
+
+export class Message extends Block<IMessage> {
+  protected render() {
+    return templator(messageTmpl(this.props));
+  }
+}

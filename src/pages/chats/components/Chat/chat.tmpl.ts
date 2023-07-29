@@ -1,11 +1,15 @@
 import './Chat.less';
 
+export interface IChat {
+  chatTitle: string;
+}
+
 // language=html
-export const chatTmpl = (chatName, messages) => `
+export const chatTmpl = ({ chatTitle }: IChat): string => `
   <section class="chat">
     <div class="chat__header">
-      <h3 class="chat__name">${chatName}</h3>
-      <button class="chat__header-btn">
+      <h3 class="chat__name">${chatTitle}</h3>
+      <button id="menuBtn" class="chat__header-btn">
         <img src="/Menu_button.svg" alt="menu button">
       </button>
       <menu class="chat__menu chat__menu_type_header">
@@ -17,7 +21,7 @@ export const chatTmpl = (chatName, messages) => `
       </menu>
     </div>
     <ul class="chat__content">
-      ${messages}
+      <div data-messages></div>
     </ul>
     <form class="chat__form" name="chat">
       <button id="attachBtn" class="chat__attach-btn" type="button">

@@ -1,4 +1,16 @@
-import { messageDayTmpl } from './messageDay.tmpl';
-import { messageList } from '../Message/Message';
+import { IMessageDay, messageDayTmpl } from './messageDay.tmpl';
+import { Block } from '../../../../utils/block';
+import { IChildren } from '../../../../models/models';
+import { templator } from '../../../../utils/templator';
 
-export const MessageDay = messageDayTmpl('today', messageList);
+type TMessageDay = IMessageDay & IChildren;
+
+export class MessageDay extends Block<TMessageDay> {
+  protected render() {
+    const {
+      children,
+      ...params
+    } = this.props;
+    return templator(messageDayTmpl(params), children);
+  }
+}

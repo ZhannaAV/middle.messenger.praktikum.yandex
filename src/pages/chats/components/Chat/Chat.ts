@@ -1,35 +1,33 @@
-import { chatTmpl } from './chat.tmpl';
-import { ChatList } from '../ChatTag/ChatTag';
+import { chatTmpl, IChat } from './chat.tmpl';
 import { MessageDay } from '../MessageDay/MessageDay';
+import { Block } from '../../../../utils/block';
+import { templator } from '../../../../utils/templator';
+import { IChildren } from '../../../../models/models';
+import { convertData, Message, messages } from '../Message/Message';
 
-const activeChat = ChatList.find((item) => item.isActive === true);
+type TChat = IChat & IChildren;
 
-export const Chat = chatTmpl(activeChat.chatTitle, MessageDay);
-
-export function manageChat(openPopup) {
-  const menuBtn = document.querySelector('.chat__header-btn');
-  const attachMenuBtn = document.querySelector('#attachBtn');
-  const menu = document.querySelector('.chat__menu_type_header');
-  const attachMenu = document.querySelector('.chat__menu_type_attach');
-  const menuAddUserBtn = document.querySelector('#addUser');
-  const menuRemoveUserBtn = document.querySelector('#removeUser');
-
-  function toggleMenu() {
-    menu.classList.toggle('chat__menu_opened');
+export class Chat extends Block<TChat> {
+  protected init() {
+    this.props.children.messages = [
+      new MessageDay({
+        date: 'today',
+        children: {
+          messageList: [
+            new Message(convertData(messages[0])),
+            new Message(convertData(messages[1])),
+            new Message(convertData(messages[2]))
+          ]
+        }
+      })
+    ];
   }
 
-  function toggleAttachMenu() {
-    attachMenu.classList.toggle('chat__menu_opened');
+  protected render() {
+    const {
+      children,
+      ...params
+    } = this.props;
+    return templator(chatTmpl(params), children);
   }
-
-  menuBtn.addEventListener('click', toggleMenu);
-  attachMenuBtn.addEventListener('click', toggleAttachMenu);
-  menuAddUserBtn.addEventListener('click', () => {
-    toggleMenu();
-    openPopup();
-  });
-  menuRemoveUserBtn.addEventListener('click', () => {
-    toggleMenu();
-    openPopup();
-  });
 }

@@ -14,20 +14,15 @@ export class Block<P extends Record<string, any> = any> {
 
   _element = null;
 
-  _meta = null;
-
-  /** JSDoc
+  /**
    * @param {Object} props
    *
    * @returns {void}
    */
   constructor(props = {}) {
     const eventBus = new EventBus();
-    this._meta = {
-      props,
-    };
 
-    this.props = this._makePropsProxy(props as P);
+    this.props = { ...this._makePropsProxy(props as P) };
 
     this.eventBus = () => eventBus;
 
@@ -36,24 +31,23 @@ export class Block<P extends Record<string, any> = any> {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+  private _registerEvents(eventBus) {
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
-    this._element = this._createDocumentElement('div');
-  }
-
-  init() {
-    this._createResources();
+  private _init() {
+    this.init();
     this.eventBus()
       .emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  _componentDidMount() {
+  protected init() {
+  }
+
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
@@ -61,12 +55,12 @@ export class Block<P extends Record<string, any> = any> {
   componentDidMount() {
   }
 
-  dispatchComponentDidMoun() {
+  protected dispatchComponentDidMoun() {
     this.eventBus()
       .emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps, newProps) {
+  private _componentDidUpdate(oldProps, newProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this.eventBus()
@@ -75,11 +69,11 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   // Может переопределять пользователь, необязательно трогать
-  componentDidUpdate(oldProps, newProps) {
+  protected componentDidUpdate(oldProps, newProps) {
     return true;
   }
 
-  setProps = (nextProps) => {
+  public setProps = (nextProps) => {
     if (!nextProps) {
       return;
     }
@@ -91,7 +85,7 @@ export class Block<P extends Record<string, any> = any> {
     return this._element;
   }
 
-  _addEvents() {
+  private _addEvents() {
     const { events = {} } = this.props as P & { events: Record<string, () => void> };
 
     Object.keys(events)
@@ -100,7 +94,7 @@ export class Block<P extends Record<string, any> = any> {
       });
   }
 
-  _render() {
+  private _render() {
     this._element = this.render();
 
     this._addEvents();
@@ -110,11 +104,11 @@ export class Block<P extends Record<string, any> = any> {
   protected render() {
   }
 
-  getContent() {
+  public getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: P) {
+  private _makePropsProxy(props: P) {
     return new Proxy(props, {
       get(target, prop) {
         const value = target[prop];
@@ -137,16 +131,7 @@ export class Block<P extends Record<string, any> = any> {
     } as any);
   }
 
-  _createDocumentElement(tagName) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-    return document.createElement(tagName);
-  }
+  public show() {}
 
-  show() {
-    this.getContent().style.display = 'block';
-  }
-
-  hide() {
-    this.getContent().style.display = 'none';
-  }
+  public hide() {}
 }

@@ -1,7 +1,9 @@
-import { profileInfoFieldTmpl } from './profileInfoField.tmpl';
-import { profileInfoConfig } from '../../constants/profileInfoConfig';
+import { IProfileInfoField, profileInfoFieldTmpl } from './profileInfoField.tmpl';
+import { Block } from '../../../../utils/block';
+import { templator } from '../../../../utils/templator';
 
-const getFields = (config) => Object.entries(config)
-  .reduce((fields, label) => fields + profileInfoFieldTmpl(label, config[label as unknown as string]), '') || '';
-
-export const ProfileInfoFields = getFields(profileInfoConfig);
+export class ProfileInfoField extends Block<IProfileInfoField> {
+  protected render() {
+    return templator(profileInfoFieldTmpl(this.props));
+  }
+}

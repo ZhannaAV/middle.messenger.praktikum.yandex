@@ -1,5 +1,6 @@
 import './ProfileInputField.less';
 import { errors } from '../../../../constants/errorConfig';
+import { IFormField } from '../../../../models/models';
 
 // language=html
 export const profileInputFieldTmpl = ({
@@ -8,17 +9,18 @@ export const profileInputFieldTmpl = ({
   label,
   type,
   isRequired,
-  isError,
-}) => `
+  pattern,
+}: IFormField): string => `
   <div class="profile-field">
-    <label htmlFor=${name} class='profile-field__label'>${label}</label>
-    <input id=${name} class="profile-field__input profile-field__input_type_${name}"
-           type=${type}
-           name=${name}
-           ${isRequired && 'required'}
-           value=${value}>
+    <div class="profile-field__wrapper">
+      <label htmlFor=${name} class='profile-field__label'>${label}</label>
+      <input id=${name} class="profile-field__input profile-field__input_type_${name}"
+             type=${type}
+             name=${name}
+             ${isRequired && 'required'}
+             pattern=${pattern}
+             value=${value}>
+    </div>
+    <span class="profile-field__input-error">${errors[name]}</span>
   </div>
-  <span
-    class="profile-field__input-error ${isError && 'profile-field__input-error_visible'}">
-    ${errors[name]}</span>
 `;

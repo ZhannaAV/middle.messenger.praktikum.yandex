@@ -1,4 +1,4 @@
-## My messenger 
+## My messenger
 
 ---
 Education project: SPA without any frameworks.
@@ -12,13 +12,17 @@ Typical messenger application for browser version.
 
 ### Tech stack
 
--Vite, Less, Express
+-Vite, Less, Express, Typescript, ESLint & Stylelint, custom template engine
 
+### Patterns
+
+-Observable, Mediator
 
 ### Usefull scripts
 
 - `npm run dev` — developer mode,
 - `npm run start` — build and listening on port 3000
+- `npm run eslint:fix` — fixing linter errors
 
 ### Links to pages
 

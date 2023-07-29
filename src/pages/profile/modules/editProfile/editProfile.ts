@@ -1,25 +1,33 @@
-import { EditProfileForm } from '../../components/ProfileForm/ProfileForm';
-import {
-  DisplayNameProfileInputField,
-  EmailProfileInputField,
-  LoginProfileInputField,
-  NameProfileInputField,
-  PhoneProfileInputField,
-  SurnameProfileInputField,
-} from '../../components/ProfileInputField/ProfileInputField';
+import { ProfileForm } from '../../components/ProfileForm/ProfileForm';
+import { ProfileInputField } from '../../components/ProfileInputField/ProfileInputField';
 import { ProfileLayout } from '../../components/ProfileLayout/ProfileLayout';
+import { inputTypeConfig } from '../../../../constants/inputTypeConfig';
+import { Block } from '../../../../utils/block';
+import { validateField, validateForm } from '../../../../utils/validation';
 
-const editProfileFields = `
-${EmailProfileInputField}
-${LoginProfileInputField}
-${NameProfileInputField}
-${SurnameProfileInputField}
-${DisplayNameProfileInputField}
-${PhoneProfileInputField}
-`;
+const editProfileConfig = {
+  formName: 'edit-profile-form',
+  isError: false,
+};
 
-const editProfileContent = `
-${EditProfileForm(editProfileFields)}
-`;
-
-export const EditProfile = ProfileLayout(editProfileContent);
+export const EditProfilePage: Block = new ProfileLayout({
+  children: {
+    content: new ProfileForm({
+      ...editProfileConfig,
+      children: {
+        fields: [
+          new ProfileInputField(inputTypeConfig.email),
+          new ProfileInputField(inputTypeConfig.login),
+          new ProfileInputField(inputTypeConfig.name),
+          new ProfileInputField(inputTypeConfig.surname),
+          new ProfileInputField(inputTypeConfig.displayNameConfig),
+          new ProfileInputField(inputTypeConfig.phone)
+        ]
+      },
+      events: {
+        submit: (e) => validateForm(e),
+        focusout: (e) => validateField(e),
+      }
+    })
+  }
+});

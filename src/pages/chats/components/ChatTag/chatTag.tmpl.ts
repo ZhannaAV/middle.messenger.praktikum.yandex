@@ -1,5 +1,14 @@
 import './ChatTag.less';
 
+export interface IChatTag {
+  chatAvatar: string;
+  chatTitle: string;
+  isLastAuthor: boolean;
+  lastMessage: string;
+  lastMessageTime: string;
+  isActive: boolean;
+}
+
 // language=html
 export const chatTagTmpl = ({
   chatAvatar,
@@ -8,7 +17,7 @@ export const chatTagTmpl = ({
   lastMessage,
   lastMessageTime,
   isActive,
-}) => `
+}: IChatTag): string => `
   <li class="tag ${isActive && 'tag_active'}">
     <img class="tag__avatar" src=${chatAvatar} alt="avatar">
     <div class="tag__text">
