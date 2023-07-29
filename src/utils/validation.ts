@@ -1,5 +1,5 @@
 const getErrorElement = (input: HTMLInputElement): Element => {
-  if (input.nextElementSibling?.tagName === 'span') {
+  if (input.nextElementSibling?.tagName === 'SPAN') {
     return input.nextElementSibling;
   }
   return input.parentElement.nextElementSibling;

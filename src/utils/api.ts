@@ -33,23 +33,25 @@ interface IOptions extends IMethodOptions {
   method: METHODS;
 }
 
+type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<unknown>
+
 class Api {
-  get = (url: string, options: IMethodOptions) => this._request(`${url}${queryStringify(options.data)}`, {
+  get: HTTPMethod = (url, options) => this._request(`${url}${queryStringify(options.data)}`, {
     ...options,
     method: METHODS.GET
   }, options?.timeout);
 
-  put = (url: string, options: IMethodOptions) => this._request(url, {
+  put: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.PUT
   }, options?.timeout);
 
-  post = (url: string, options: IMethodOptions) => this._request(url, {
+  post: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.POST
   }, options?.timeout);
 
-  delete = (url: string, options: IMethodOptions) => this._request(url, {
+  delete: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.DELETE
   }, options?.timeout);
