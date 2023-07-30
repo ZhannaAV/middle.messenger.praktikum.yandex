@@ -1,16 +1,19 @@
 .field {
+  display: flex;
+  flex-direction: column;
+
   &__label {
     font-size: 10px;
     line-height: 12px;
     font-weight: 400;
-    color: #A0A0A0;
+    color: #a0a0a0;
     margin-bottom: 5px;
   }
 
   &__input {
     padding-bottom: 10px;
     border: none;
-    border-bottom: 1px solid #E8E8E8;
+    border-bottom: 1px solid #e8e8e8;
     margin-bottom: 6px;
     font-size: 14px;
     line-height: 17px;
@@ -21,22 +24,22 @@
     overflow: hidden;
   }
 
-  &__input:focus{
+  &__input:focus {
     outline: none;
   }
 
-  &__input-error{
+  &__input-error {
     font-size: 10px;
-    line-height: 12px;
+    line-height: 10px;
     font-weight: 400;
-    color: #FF4062;
+    color: #ff4062;
     height: 18px;
     opacity: 0;
   }
+}
 
-  &__input-error_visible{
-    opacity: 1;
-  }
+.input-error_visible{
+  opacity: 1;
 }
 
 

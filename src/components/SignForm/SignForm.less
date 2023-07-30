@@ -1,21 +1,7 @@
-.form-block{
-  box-sizing: border-box;
-  max-width: 396px;
-  padding: 0 0 70px;
-  margin: auto;
+.sign-form {
+  margin-top: 40px;
 
-  &__title{
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 29px;
-    margin: 0;
-  }
-
-  &__form{
-    margin-top: 40px;
-  }
-
-  &__fields{
+  &__fields {
     border: none;
     padding: 0;
     display: flex;
@@ -23,11 +9,11 @@
     margin-bottom: 96px;
   }
 
-  &__button{
+  &__button {
     width: 100%;
     background: #000;
     color: #fff;
-    font-family: 'Inter', Arial, sans-serif;
+    font-family: Inter, Arial, sans-serif;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -36,72 +22,51 @@
     border-radius: 5px;
   }
 
-  &__button:disabled{
-    background-color: #A0A0A0;
+  &__button:disabled {
+    background-color: #a0a0a0;
   }
 
-  &__button:hover{
+  &__button:hover {
     opacity: 0.8;
   }
 
-  &__text{
-    color: #A0A0A0;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-    margin: 31px 0 0;
-  }
-
-  &__link{
-    margin-left: 6px;
-    text-decoration: none;
-    color: #000;
-  }
-
-  &__link:hover{
-    opacity: 0.7;
-  }
-
-  &__error{
+  &__error {
     font-size: 10px;
     line-height: 12px;
     font-weight: 400;
-    color: #FF4062;
+    color: #ff4062;
     height: 18px;
     opacity: 0;
   }
 
-  &__error-visible{
+  &__error-visible {
     opacity: 1;
   }
 
-
-  @media screen and (max-width: 768px){
-    &{
+  @media screen and (max-width: 768px) {
+    & {
       padding-bottom: 232px;
       min-height: 475px;
     }
   }
 
-  @media screen and (max-width: 425px){
-    &{
+  @media screen and (max-width: 425px) {
+    & {
       padding-bottom: 30px;
       padding-left: 30px;
       padding-right: 30px;
       min-height: 475px;
     }
-    &__form{
+
+    &__form {
       margin-top: 80px;
     }
-    &__button{
+
+    &__button {
       font-size: 12px;
       line-height: 15px;
-    }
-    &__text{
-      font-size: 12px;
-      line-height: 15px;
-      margin-top: 14px;
     }
   }
 }
+
 
