@@ -1,43 +1,36 @@
-import { IProfile, profileTmpl } from './profile.tmpl';
 import { profileInfoConfig } from './constants/profileInfoConfig';
-import { ProfileLayout } from './components/ProfileLayout/ProfileLayout';
-import { Block } from '../../utils/block';
-import { templator } from '../../utils/templator';
-import { IChildren } from '../../models/models';
 import { ProfileInfoField } from './components/ProfileInfoFields/ProfileInfoFields';
+import { ProfileLayout } from './components/ProfileLayout/ProfileLayout';
+import { ProfilePageContent } from './components/ProfilePageContent/ProfilePageContent';
 
-type TProfile = IProfile & IChildren;
+export class ProfilePage extends ProfileLayout {
+  init() {
+    this.props = {
+      children: {
+        content: new ProfilePageContent({
+          chatName: profileInfoConfig.DisplayName,
+          children: {
+            fields: [
+              new ProfileInfoField({ label: 'Email' }),
+              new ProfileInfoField({
+                label: 'Login',
+                value: 'login'
+              }),
+              new ProfileInfoField({ label: 'Name' }),
+              new ProfileInfoField({ label: 'Surname' }),
+              new ProfileInfoField({
+                label: 'DisplayName',
+                value: 'user'
+              }),
+              new ProfileInfoField({ label: 'Phone' })
+            ]
+          }
+        })
+      }
+    };
+  }
 
-class Profile extends Block<TProfile> {
-  protected render() {
-    const {
-      children,
-      ...params
-    } = this.props;
-    return templator(profileTmpl(params), children);
+  render(): HTMLElement {
+    return new ProfileLayout(this.props).getContent();
   }
 }
-
-export const ProfilePage: Block = new ProfileLayout({
-  children: {
-    content: new Profile({
-      chatName: profileInfoConfig.DisplayName,
-      children: {
-        fields: [
-          new ProfileInfoField({ label: 'Email' }),
-          new ProfileInfoField({
-            label: 'Login',
-            value: 'login'
-          }),
-          new ProfileInfoField({ label: 'Name' }),
-          new ProfileInfoField({ label: 'Surname' }),
-          new ProfileInfoField({
-            label: 'DisplayName',
-            value: 'user'
-          }),
-          new ProfileInfoField({ label: 'Phone' })
-        ]
-      }
-    })
-  }
-});

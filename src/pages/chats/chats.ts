@@ -6,7 +6,7 @@ import { IChildren, TEvent } from '../../models/models';
 import { templator } from '../../utils/templator';
 import { Popup } from '../../components/Popup/Popup';
 
-class Chats extends Block<IChildren> {
+export class Chats extends Block<IChildren> {
   protected manageChat(e:TEvent): void {
     const menu = document.querySelector('.chat__menu_type_header');
     const attachMenu = document.querySelector('.chat__menu_type_attach');
@@ -26,6 +26,8 @@ class Chats extends Block<IChildren> {
   }
 
   protected init() {
+    this.props = { children: {} };
+
     this.props.children.chats = [
       new ChatTag(ChatTagList[0]),
       new ChatTag(ChatTagList[1]),
@@ -49,5 +51,3 @@ class Chats extends Block<IChildren> {
     return templator(layoutTmpl(), this.props.children);
   }
 }
-
-export const ChatsPage: Block = new Chats({ children: {} });

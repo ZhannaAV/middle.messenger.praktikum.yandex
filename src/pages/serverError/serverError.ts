@@ -1,7 +1,14 @@
 import { ErrorPage } from '../../components/errorPage/ErrorPage';
-import { Block } from '../../utils/block';
 
-export const ServerErrorPage: Block = new ErrorPage({
-  title: '500',
-  subTitle: 'We are already fixing',
-});
+export class ServerErrorPage extends ErrorPage {
+  protected init() {
+    this.props = {
+      title: '500',
+      subTitle: 'We are already fixing',
+    };
+  }
+
+  protected render(): HTMLElement {
+    return new ErrorPage(this.props).getContent();
+  }
+}
