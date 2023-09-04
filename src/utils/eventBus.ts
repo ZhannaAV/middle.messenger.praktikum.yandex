@@ -1,5 +1,5 @@
 export class EventBus {
-  private listeners: Record<string, Array<() => void>> = {};
+  private listeners: Record<string, Array<(...args) => void>> = {};
 
   on(event: string, callback: () => void) {
     if (!this.listeners[event]) {
