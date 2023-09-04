@@ -1,13 +1,11 @@
 import { IFormField } from '../models/models';
-import { profileInfoConfig } from '../pages/profile/constants/profileInfoConfig';
 
-export const inputTypeConfig: Record<string, IFormField & { value: string }> = {
+export const inputTypeConfig: Record<string, IFormField> = {
   email: {
-    label: 'E-mail',
+    label: 'Email',
     name: 'email',
     type: 'email',
     isRequired: true,
-    value: '',
     pattern: '^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$',
   },
   login: {
@@ -15,31 +13,27 @@ export const inputTypeConfig: Record<string, IFormField & { value: string }> = {
     name: 'login',
     type: 'text',
     isRequired: true,
-    value: '',
     pattern: '(?=.*[a-z]|[A-Z])[a-zA-Z0-9\\-_]{3,20}',
   },
   name: {
     label: 'Name',
     name: 'first_name',
     type: 'text',
-    isRequired: false,
-    value: '',
+    isRequired: true,
     pattern: '^[A-ZА-Я]+[A-Za-zА-Яа-я\\-]*',
   },
   surname: {
     label: 'Surname',
     name: 'second_name',
     type: 'text',
-    isRequired: false,
-    value: '',
+    isRequired: true,
     pattern: '^[A-ZА-Я]+[A-Za-zА-Яа-я\\-]*',
   },
   phone: {
-    label: 'Phone number',
+    label: 'Phone',
     name: 'phone',
     type: 'tel',
-    isRequired: false,
-    value: '',
+    isRequired: true,
     pattern: '^[\\+]?[0-9]{10,15}',
   },
   password: {
@@ -47,7 +41,6 @@ export const inputTypeConfig: Record<string, IFormField & { value: string }> = {
     name: 'password',
     type: 'password',
     isRequired: true,
-    value: '',
     pattern: '((?=.*\\d)(?=.*[A-Z]).{8,40})',
   },
   passwordAgain: {
@@ -55,26 +48,8 @@ export const inputTypeConfig: Record<string, IFormField & { value: string }> = {
     name: 'password_again',
     type: 'password',
     isRequired: true,
-    value: '',
   },
-  newPassword: {
-    value: '',
-    label: 'New passwordProfile',
-    name: 'newPassword',
-    type: 'password',
-    isRequired: true,
-    pattern: '((?=.*\\d)(?=.*[A-Z]).{8,40})',
-  },
-  repeatNewPasswordConfig: {
-    value: '',
-    label: 'Repeat new passwordProfile',
-    name: 'passwordAgain',
-    type: 'password',
-    isRequired: true,
-    pattern: '((?=.*\\d)(?=.*[A-Z]).{8,40})',
-  },
-  displayNameConfig: {
-    value: profileInfoConfig.DisplayName,
+  displayName: {
     label: 'Display name',
     name: 'display_name',
     type: 'text',

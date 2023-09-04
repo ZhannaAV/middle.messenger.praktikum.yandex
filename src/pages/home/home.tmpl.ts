@@ -5,7 +5,7 @@ export const homeTmpl = (): string => `
   <div id="app">
     <div data-header></div>
     <main class="promo">
-      <img src="/public/lamp2.svg" alt="switched on lamp" class="promo__img"/>
+      <img src="/lamp2.svg" alt="switched on lamp" class="promo__img"/>
       <div class="promo__info">
         <h1 class="promo__title">Messenger for fun
           <div

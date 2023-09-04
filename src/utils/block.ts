@@ -22,7 +22,7 @@ export class Block<P extends Record<string, any> = any> {
   constructor(props = {}) {
     const eventBus = new EventBus();
 
-    this.props = { ...this._makePropsProxy(props as P) };
+    this.props = this._makePropsProxy(props as P);
 
     this.eventBus = () => eventBus;
 
@@ -55,7 +55,7 @@ export class Block<P extends Record<string, any> = any> {
   componentDidMount() {
   }
 
-  protected dispatchComponentDidMoun() {
+  protected dispatchComponentDidMount() {
     this.eventBus()
       .emit(Block.EVENTS.FLOW_CDM);
   }
@@ -106,14 +106,13 @@ export class Block<P extends Record<string, any> = any> {
 
   private _render() {
     const el: unknown = this.render();
+    if (this._element) this._element.replaceWith(el as HTMLElement);
     this._element = el as HTMLElement;
-
     this._addEvents();
   }
 
   // Может переопределять пользователь, необязательно трогать
   protected render() {
-
   }
 
   public getContent() {
@@ -121,6 +120,7 @@ export class Block<P extends Record<string, any> = any> {
   }
 
   private _makePropsProxy(props: P) {
+    const self = this;
     return new Proxy(props, {
       get(target: Record<string, any>, prop: string) {
         const value = target[prop];
@@ -128,13 +128,8 @@ export class Block<P extends Record<string, any> = any> {
       },
       set(target: Record<string, any>, prop: string, value: unknown) {
         const oldTarget = { ...target };
-
         target[prop] = value;
-
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        this.eventBus()
-          .emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },
       deleteProperty() {

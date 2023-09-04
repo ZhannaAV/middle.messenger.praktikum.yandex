@@ -24,8 +24,8 @@ export const messages = [
 ];
 
 const markList: Record<string, string> = {
-  hasGet: '/public/HasGetMark.svg',
-  hasRead: '/public/HasReadMark.svg',
+  hasGet: '/HasGetMark.svg',
+  hasRead: '/HasReadMark.svg',
 };
 
 export const convertData = (obj: Record<string, any>): IMessage => ({

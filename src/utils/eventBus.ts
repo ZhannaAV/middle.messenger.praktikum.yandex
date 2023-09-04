@@ -17,11 +17,11 @@ export class EventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string) {
+  emit(event: string, ...args) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
-    this.listeners[event].forEach((listener) => listener());
+    this.listeners[event].forEach((listener) => listener(...args));
   }
 }

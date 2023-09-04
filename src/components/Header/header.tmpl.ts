@@ -8,7 +8,7 @@ export interface IHeader {
 export const headerTmpl = ({ place }: IHeader): string => `
     <header class="header header_${place}">
       <a href='/'>
-        <img class='header__logo' src="/public/logo.svg" alt='logo'/>
+        <img class='header__logo' src="/logo.svg" alt='logo'/>
       </a>
     </header>
 `;

@@ -1,36 +1,24 @@
-import { profileInfoConfig } from './constants/profileInfoConfig';
-import { ProfileInfoField } from './components/ProfileInfoFields/ProfileInfoFields';
-import { ProfileLayout } from './components/ProfileLayout/ProfileLayout';
-import { ProfilePageContent } from './components/ProfilePageContent/ProfilePageContent';
+import { profileInfoFields } from './components/ProfileInfoFields/ProfileInfoFields';
+import { profileLayout, ProfileLayout } from './components/ProfileLayout/ProfileLayout';
+import { profilePageContent } from './components/ProfilePageContent/ProfilePageContent';
+import { avatar } from './components/Avatar/Avatar';
 
 export class ProfilePage extends ProfileLayout {
   init() {
-    this.props = {
+    profilePageContent.setProps({
       children: {
-        content: new ProfilePageContent({
-          chatName: profileInfoConfig.DisplayName,
-          children: {
-            fields: [
-              new ProfileInfoField({ label: 'Email' }),
-              new ProfileInfoField({
-                label: 'Login',
-                value: 'login'
-              }),
-              new ProfileInfoField({ label: 'Name' }),
-              new ProfileInfoField({ label: 'Surname' }),
-              new ProfileInfoField({
-                label: 'DisplayName',
-                value: 'user'
-              }),
-              new ProfileInfoField({ label: 'Phone' })
-            ]
-          }
-        })
+        fields: profileInfoFields,
       }
-    };
+    });
+    profileLayout.setProps({
+      children: {
+        content: profilePageContent,
+        avatar
+      }
+    });
   }
 
   render(): HTMLElement {
-    return new ProfileLayout(this.props).getContent();
+    return profileLayout.getContent();
   }
 }

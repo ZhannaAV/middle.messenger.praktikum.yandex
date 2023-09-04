@@ -1,22 +1,30 @@
 import './Chat.less';
+import { store } from '../../../../store/store';
 
-export interface IChat {
-  chatTitle: string;
+export enum EChatButtons {
+  chatMenu = 'chatMenuBtn',
+  addAttachmentMenu = 'addAttachmenMenutBtn',
+  deleteChat = 'deleteChatBtn',
+  changeChatAvatar = 'changeChatAvatarBtn',
+  addPerson = 'addPersonBtn',
+  deletePerson = 'deletePersonBtn'
 }
+const getChatTitle = () => store.getState().chats.find((item) => item.id === store.getState().activeChatId)?.title;
 
 // language=html
-export const chatTmpl = ({ chatTitle }: IChat): string => `
+export const chatTmpl = (): string => `
   <section class="chat">
     <div class="chat__header">
-      <h3 class="chat__name">${chatTitle}</h3>
-      <button id="menuBtn" class="chat__header-btn">
+      <h3 class="chat__name">${getChatTitle() || ''}</h3>
+      <button id=${EChatButtons.chatMenu} class="chat__header-btn">
         <img src="/Menu_button.svg" alt="menu button">
       </button>
       <menu class="chat__menu chat__menu_type_header">
-        <button id="addUser" class="chat__menu-btn" type="button">add person</button>
-        <button id="removeUser" class="chat__menu-btn" type="button">remove person</button>
-        <button id="removeChat" class="chat__menu-btn chat__menu-btn_type_warning"
-                type="button">remove chat
+        <button id=${EChatButtons.changeChatAvatar} class="chat__menu-btn" type="button">Change chat avatar</button>
+        <button id=${EChatButtons.addPerson} class="chat__menu-btn" type="button">Add person</button>
+        <button id=${EChatButtons.deletePerson} class="chat__menu-btn" type="button">Delete person</button>
+        <button id=${EChatButtons.deleteChat} class="chat__menu-btn chat__menu-btn_type_warning"
+                type="button">Delete chat
         </button>
       </menu>
     </div>
@@ -24,7 +32,7 @@ export const chatTmpl = ({ chatTitle }: IChat): string => `
       <div data-messages></div>
     </ul>
     <form class="chat__form" name="chat">
-      <button id="attachBtn" class="chat__attach-btn" type="button">
+      <button id=${EChatButtons.addAttachmentMenu} class="chat__attach-btn" type="button">
         <img src="/Attach_button.svg" alt="attach button">
       </button>
       <input placeholder="Text message..." class="chat__input" type="text" name="message">

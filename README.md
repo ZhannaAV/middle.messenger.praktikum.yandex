@@ -16,7 +16,7 @@ Typical messenger application for browser version.
 
 ### Patterns
 
--Observable, Mediator
+-Observable, Mediator, REST API
 
 ### Usefull scripts
 
@@ -27,11 +27,11 @@ Typical messenger application for browser version.
 ### Links to pages
 
 - *[Home](https://my-messenger-for-fun.netlify.app/)*,
-- *[Sign in](https://my-messenger-for-fun.netlify.app/signin)*,
-- *[Sign up](https://my-messenger-for-fun.netlify.app/signup)*,
+- *[Signin](https://my-messenger-for-fun.netlify.app/signin)*,
+- *[Signup](https://my-messenger-for-fun.netlify.app/signup)*,
 - *[Chats](https://my-messenger-for-fun.netlify.app/chats)*,
 - *[Profile](https://my-messenger-for-fun.netlify.app/profile)*.
 - *[Profile/edit](https://my-messenger-for-fun.netlify.app/profile/edit)*.
-- *[Profile/changePassword](https://my-messenger-for-fun.netlify.app/profile/changePassword)*.
+- *[Profile/password](https://my-messenger-for-fun.netlify.app/profile/changePassword)*.
 - *[404](https://my-messenger-for-fun.netlify.app/404)*.
 - *[500](https://my-messenger-for-fun.netlify.app/500)*.

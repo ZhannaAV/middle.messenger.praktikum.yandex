@@ -6,7 +6,7 @@ export interface BlockConstructable<P = any> {
 
 function render(query: string, block: Block) {
   const root = document.querySelector(query);
-  root.replaceWith(block.getContent());
+  if (root) root.replaceWith(block.getContent());
   return root;
 }
 

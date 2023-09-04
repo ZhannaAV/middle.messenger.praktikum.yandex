@@ -8,7 +8,7 @@ export const templator = (tmpl: string, children: Record<string, Block | Block[]
       .forEach(([titleComponent, component]) => {
         const el = fragment.querySelector(`[data-${titleComponent}]`);
         if (Array.isArray(component)) {
-          component.reverse().forEach((comp) => el.after(comp.getContent()));
+          component.forEach((comp) => el.before(comp.getContent()));
           el.remove();
         } else {
           el.replaceWith(component.getContent() as Node);
