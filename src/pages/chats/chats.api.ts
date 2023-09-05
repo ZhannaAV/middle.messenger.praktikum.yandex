@@ -1,24 +1,15 @@
 import { httpRequest } from '../../utils/api/http';
 
-export interface INewChatRequestData {
+export interface INewChatRequestBody {
   title: string;
-}
-
-export interface IFindPersonRequestData {
-  login: string;
-}
-
-export interface IManageChatPersonData {
-  users: number[],
-  chatId: number
 }
 
 const headers = {
   'Content-Type': 'application/json',
 };
 
-class ChatsApi {
-  private readonly _commonUrlPart: string;
+export class ChatsApi {
+  protected readonly _commonUrlPart: string;
 
   constructor() {
     this._commonUrlPart = '/chats';
@@ -28,7 +19,7 @@ class ChatsApi {
     return httpRequest.get(`${this._commonUrlPart}`, {});
   }
 
-  public createNewChat(data: INewChatRequestData) {
+  public createNewChat(data: INewChatRequestBody) {
     return httpRequest.post(`${this._commonUrlPart}`, { data: JSON.stringify(data), headers });
   }
 
@@ -38,18 +29,6 @@ class ChatsApi {
 
   public changeChatAvatar(data: FormData) {
     return httpRequest.put(`${this._commonUrlPart}/avatar`, { data });
-  }
-
-  public addPerson(data: IManageChatPersonData) {
-    return httpRequest.put(`${this._commonUrlPart}/users`, { data: JSON.stringify(data), headers });
-  }
-
-  public deletePerson(data: IManageChatPersonData) {
-    return httpRequest.delete(`${this._commonUrlPart}/users`, { data: JSON.stringify(data), headers });
-  }
-
-  public findPersonByLogin(data:IFindPersonRequestData) {
-    return httpRequest.post('/user/search', { data: JSON.stringify(data), headers });
   }
 }
 

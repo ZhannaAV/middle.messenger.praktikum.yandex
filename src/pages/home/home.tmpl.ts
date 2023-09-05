@@ -1,4 +1,5 @@
 import './home.less';
+import { EPathMap } from '../../utils/routing/model';
 
 // language=html
 export const homeTmpl = (): string => `
@@ -14,10 +15,10 @@ export const homeTmpl = (): string => `
             class='promo__title-word'>
         </h1>
         <nav class="navigation">
-          <a class='navigation__link-signup' href='/signup'>
+          <a class='navigation__link-signup' href=${EPathMap.signup}>
             Sign up
           </a>
-          <a class='navigation__link-signin' href='/signin'>
+          <a class='navigation__link-signin' href=${EPathMap.signin}>
             <button class="navigation__signin-btn" type='button'>
               Sign in
             </button>

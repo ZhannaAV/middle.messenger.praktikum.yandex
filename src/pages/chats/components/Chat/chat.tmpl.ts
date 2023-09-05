@@ -9,13 +9,18 @@ export enum EChatButtons {
   addPerson = 'addPersonBtn',
   deletePerson = 'deletePersonBtn'
 }
-const getChatTitle = () => store.getState().chats.find((item) => item.id === store.getState().activeChatId)?.title;
+
+const getChatTitle = () => store.getChats()
+  .find((item) => item.id === store.getActiveChatId())?.title;
 
 // language=html
 export const chatTmpl = (): string => `
   <section class="chat">
     <div class="chat__header">
-      <h3 class="chat__name">${getChatTitle() || ''}</h3>
+      <div class="chat__header-info">
+        <h3 class="chat__name">${getChatTitle() || ''}</h3>
+        <span>${store.getChatPersonsCount() || 1} players</span>
+      </div>
       <button id=${EChatButtons.chatMenu} class="chat__header-btn">
         <img src="/Menu_button.svg" alt="menu button">
       </button>

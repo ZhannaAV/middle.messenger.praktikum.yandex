@@ -1,4 +1,5 @@
 import { BlockConstructable, Route } from './route';
+import { EPathMap } from './model';
 
 class Router {
   // eslint-disable-next-line no-use-before-define
@@ -32,14 +33,13 @@ class Router {
       const target = event.currentTarget as Window;
       this._onRoute(target.location.pathname);
     };
-
     this._onRoute(window.location.pathname);
   }
 
   private _onRoute(path: string) {
     const route = this._getRoute(path);
     if (!route) {
-      return;
+      this.go(EPathMap.notFound);
     }
 
     if (this._currentRoute) {
@@ -52,6 +52,7 @@ class Router {
 
   public go(path: string) {
     this._history.pushState({}, '', path);
+    console.log(this._history);
     this._onRoute(path);
   }
 

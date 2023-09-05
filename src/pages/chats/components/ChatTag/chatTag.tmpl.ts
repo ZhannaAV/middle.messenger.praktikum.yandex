@@ -8,7 +8,7 @@ export interface IChatTagTmpl extends IChatTag {
 }
 
 const convertDate = (date: string): Date | null => (date ? new Date(date) : null);
-const checkLastAuthor = (login: string): boolean => store.getState().user.login === login;
+const checkLastAuthor = (login: string): boolean => store.getUser().login === login;
 
 /* eslint-disable camelcase */
 // language=html

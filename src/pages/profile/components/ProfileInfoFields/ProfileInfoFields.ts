@@ -16,8 +16,8 @@ export class ProfileInfoField extends Block<IProfileInfoField> {
   constructor(props: IProfileInfoField) {
     super(props);
 
-    store.on(StoreEvents.Updated, () => {
-      this.setProps({ value: store.getState().user[EInfoFields[this.props.label]] });
+    store.on(StoreEvents.UserUpdated, () => {
+      this.setProps({ value: store.getUser()[EInfoFields[this.props.label]] });
     });
   }
 

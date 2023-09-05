@@ -3,29 +3,39 @@ import { store } from '../../store/store';
 import { router } from '../../utils/routing/router';
 import { Popup } from '../../components/Popup/Popup';
 import { validateForm } from '../../utils/validation';
+import { EPathMap } from '../../utils/routing/model';
+import { EErrorStatuses } from '../../components/errorPage/ErrorPage';
 
 class ProfileController {
   public getProfileInfo() {
     profileApi.getInfo()
       .then((res: any) => {
         if (res.status === 200) {
-          store.set('user', JSON.parse(res.response));
-          return true;
+          store.setUser(JSON.parse(res.response));
         }
-        return Promise.reject({ ...JSON.parse(res.response) });
+        return Promise.reject(res.status.toString());
       })
-      .catch((err) => console.log(err));
+      .catch((errorStatus) => {
+        if (errorStatus === EErrorStatuses.server) {
+          router.go(EPathMap.serverError);
+        }
+      });
   }
 
   public logout() {
     profileApi.logout()
       .then((res: any) => {
         if (res.status === 200) {
-          return router.go('/signin');
+          store.reset();
+          return router.go(EPathMap.signin);
         }
-        return Promise.reject({ ...JSON.parse(res.response) });
+        return Promise.reject(res.status.toString());
       })
-      .catch((err) => console.log(err));
+      .catch((errorStatus) => {
+        if (errorStatus === EErrorStatuses.server) {
+          router.go(EPathMap.serverError);
+        }
+      });
   }
 
   public changeAvatar(form: HTMLFormElement) {
@@ -35,7 +45,7 @@ class ProfileController {
       return profileApi.changeAvatar(body)
         .then((res: any) => {
           if (res.status === 200) {
-            store.set('user', JSON.parse(res.response));
+            store.setUser(JSON.parse(res.response));
             return Popup.hide();
           }
           return Promise.reject({ ...JSON.parse(res.response) });
@@ -48,8 +58,8 @@ class ProfileController {
     return profileApi.edit(data)
       .then((res: any) => {
         if (res.status === 200) {
-          store.set('user', JSON.parse(res.response));
-          return router.go('/profile');
+          store.setUser(JSON.parse(res.response));
+          return router.go(EPathMap.profile);
         }
         return Promise.reject({ ...JSON.parse(res.response) });
       });
@@ -59,7 +69,7 @@ class ProfileController {
     return profileApi.changePassword(data)
       .then((res: any) => {
         if (res.status === 200) {
-          return router.go('/profile');
+          return router.go(EPathMap.profile);
         }
         return Promise.reject({ ...JSON.parse(res.response) });
       });

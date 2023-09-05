@@ -8,6 +8,7 @@ import { Popup } from '../../../../components/Popup/Popup';
 import { store, StoreEvents } from '../../../../store/store';
 import { chatsController } from '../../chats.controller';
 import { EPopupForms } from '../../../../components/Popup/constants/popupFormsConfig';
+import { chatController } from './chat.controller';
 
 interface IChat {
   chatId: number
@@ -18,8 +19,8 @@ type TChat = IChat & IChildren;
 export class Chat extends Block<TChat> {
   constructor(props: Partial<TChat>) {
     super(props);
-    store.on(StoreEvents.ChatsUpdated, () => {
-      this.setProps({ chatId: store.getState().activeChatId });
+    store.on(StoreEvents.ActiveChatIdUpdated, () => {
+      if (this.props.chatId !== store.getActiveChatId()) this.setProps({ chatId: store.getActiveChatId() });
     });
   }
 
@@ -44,7 +45,7 @@ export class Chat extends Block<TChat> {
       case EChatButtons.addPerson:
         Popup.setProps({
           formName: EPopupForms.addPerson,
-          apiMethod: chatsController.addPerson
+          apiMethod: chatController.addPerson
         });
         toggleMenu(chatMenu);
         Popup.show();
@@ -52,7 +53,7 @@ export class Chat extends Block<TChat> {
       case EChatButtons.deletePerson:
         Popup.setProps({
           formName: EPopupForms.deletePerson,
-          apiMethod: chatsController.deletePerson
+          apiMethod: chatController.deletePerson
         });
         toggleMenu(chatMenu);
         Popup.show();

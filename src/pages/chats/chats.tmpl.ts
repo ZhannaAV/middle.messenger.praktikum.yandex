@@ -1,7 +1,9 @@
 import './chats.less';
+import { EPathMap } from '../../utils/routing/model';
 
 // language=html
 export const chatsTmpl = (): string => `
+  <div id="app"
   <main class="layout">
     <aside class="layout__sidebar">
       <div class="layout__sidebar-top">
@@ -9,7 +11,7 @@ export const chatsTmpl = (): string => `
           <img src="/Menu_button.svg" alt="chats menu button">
         </button>
         <menu class="layout__menu">
-          <a class="layout__profile-link" href="/profile">Profile</a>
+          <a class="layout__profile-link" href=${EPathMap.profile}>Profile</a>
           <button id="newChat" class="layout__menu-btn" type="button">New chat</button>
         </menu>
         <input class="layout__search-input" name="search" type="text" placeholder="Search">
@@ -20,4 +22,5 @@ export const chatsTmpl = (): string => `
     </aside>
     <div data-chat>
   </main>
+  </div>
 `;

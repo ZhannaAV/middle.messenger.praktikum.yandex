@@ -1,12 +1,20 @@
 import { EventBus } from '../utils/eventBus';
-import { IChatTag, IStore } from './model';
+import { EStoreProperty, IChatTag, IStore } from './model';
 
 export enum StoreEvents {
-  Updated = 'updated',
-  ChatsUpdated = 'chatsUpdated'
+  ChatsUpdated = 'chatsUpdated',
+  ActiveChatIdUpdated = 'activeChatIdUpdated',
+  TokenUpdated = 'TokenUpdated',
+  UserUpdated = 'userUpdated',
 }
 
-function set(object: any, path: string, value: unknown): any {
+/**
+ * Set value to object property by path
+ * @param object
+ * @param path
+ * @param value
+ */
+function set(object: IStore, path: string, value: unknown): Record<string, any> {
   if (typeof path !== 'string') throw new Error('path must be string');
   if (typeof object === 'object') {
     path.split('.')
@@ -36,18 +44,66 @@ const initialState = {
   },
   chats: [] as IChatTag[],
   activeChatId: 0,
+  activeChat: {
+    persons: []
+  }
 };
 
 class Store extends EventBus {
   private state: IStore = initialState;
 
-  public getState() {
-    return this.state;
-  }
-
   public set(path: string, value: unknown) {
     set(this.state, path, value);
-    return path.startsWith('user') ? this.emit(StoreEvents.Updated) : this.emit(StoreEvents.ChatsUpdated);
+  }
+
+  public reset() {
+    this.state = initialState;
+    this.emit(StoreEvents.UserUpdated);
+  }
+
+  public getChatPersonsCount() {
+    return this.state.activeChat.persons.length;
+  }
+
+  public setActiveChatId(id: number) {
+    this.set(EStoreProperty.activeChatId, id);
+    this.emit(StoreEvents.ActiveChatIdUpdated);
+  }
+
+  public getActiveChatId() {
+    return this.state.activeChatId;
+  }
+
+  public setToken(token) {
+    this.set(EStoreProperty.token, token);
+    this.emit(StoreEvents.TokenUpdated);
+  }
+
+  public setUser(user) {
+    this.set(EStoreProperty.user, user);
+    this.emit(StoreEvents.UserUpdated);
+  }
+
+  public getUser() {
+    return this.state.user;
+  }
+
+  public setChats(chats) {
+    this.set(EStoreProperty.chats, chats);
+    this.emit(StoreEvents.ChatsUpdated);
+  }
+
+  public getChats() {
+    return this.state.chats;
+  }
+
+  public setChatAvatar(chat) {
+    const newChats = this.getChats()
+      .map((item) => (item.id === chat.id ? {
+        ...item,
+        avatar: chat.avatar
+      } : item));
+    this.setChats(newChats);
   }
 }
 

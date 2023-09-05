@@ -10,8 +10,8 @@ type TProfile = IProfile & IChildren;
 export class ProfilePageContent extends Block<TProfile> {
   constructor(props: TProfile | Record<string, never>) {
     super(props);
-    store.on(StoreEvents.Updated, () => {
-      this.setProps({ display_name: store.getState().user?.display_name || store.getState().user?.first_name });
+    store.on(StoreEvents.UserUpdated, () => {
+      this.setProps({ display_name: store.getUser().display_name || store.getUser().first_name });
     });
   }
 

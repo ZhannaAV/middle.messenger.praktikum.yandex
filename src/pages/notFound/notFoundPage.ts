@@ -1,9 +1,9 @@
-import { ErrorPage } from '../../components/errorPage/ErrorPage';
+import { EErrorStatuses, ErrorPage } from '../../components/errorPage/ErrorPage';
 
 export class NotFoundPage extends ErrorPage {
   protected init() {
     this.props = {
-      title: '404',
+      title: EErrorStatuses.notFound,
       subTitle: 'Got it wrong',
     };
   }

@@ -10,20 +10,21 @@ import { ServerErrorPage } from './pages/serverError/serverError';
 import { Home } from './pages/home/home';
 import { PasswordProfilePage } from './pages/profile/modules/passwordProfile/passwordProfile';
 import { router } from './utils/routing/router';
+import { EPathMap } from './utils/routing/model';
 
 const app = document.querySelector('#app');
 app.after(Popup.getContent());
 
 window.addEventListener('DOMContentLoaded', async () => {
   router
-    .use('/', Home)
-    .use('/signin', SigninPage)
-    .use('/signup', SignupPage)
-    .use('/profile', ProfilePage)
-    .use('/profile/edit', EditProfilePage)
-    .use('/profile/password', PasswordProfilePage)
-    .use('/chats', Chats)
-    .use('/404', NotFoundPage)
-    .use('/500', ServerErrorPage)
+    .use(EPathMap.home, Home)
+    .use(EPathMap.signin, SigninPage)
+    .use(EPathMap.signup, SignupPage)
+    .use(EPathMap.profile, ProfilePage)
+    .use(EPathMap.editProfile, EditProfilePage)
+    .use(EPathMap.editPassword, PasswordProfilePage)
+    .use(EPathMap.chats, Chats)
+    .use(EPathMap.notFound, NotFoundPage)
+    .use(EPathMap.serverError, ServerErrorPage)
     .start();
 });

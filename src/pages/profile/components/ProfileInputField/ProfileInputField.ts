@@ -9,8 +9,8 @@ export class ProfileInputField extends Block<IFormField> {
   constructor(props: IFormField) {
     super(props);
 
-    store.on(StoreEvents.Updated, () => {
-      this.setProps({ value: store.getState().user[this.props.name] });
+    store.on(StoreEvents.UserUpdated, () => {
+      this.setProps({ value: store.getUser()[this.props.name] });
     });
   }
 

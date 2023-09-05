@@ -13,8 +13,8 @@ export class Avatar extends Block<TAvatar> {
   constructor(props: TAvatar) {
     super(props);
 
-    store.on(StoreEvents.Updated, () => {
-      this.setProps({ avatar: store.getState().user?.avatar });
+    store.on(StoreEvents.UserUpdated, () => {
+      this.setProps({ avatar: store.getUser().avatar });
     });
   }
 

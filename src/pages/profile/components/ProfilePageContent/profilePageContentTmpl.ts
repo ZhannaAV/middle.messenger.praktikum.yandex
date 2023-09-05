@@ -1,4 +1,5 @@
 import './ProfilePageContent.less';
+import { EPathMap } from '../../../../utils/routing/model';
 
 export interface IProfile {
   display_name: string;
@@ -13,8 +14,8 @@ export const profilePageContentTmpl = ({ display_name }: IProfile): string => `
       <div data-fields></div>
     </ul>
     <div class="profile__elements">
-      <a href="/profile/edit" class="profile__element profile__element_type_link">Edit</a>
-      <a href="/profile/password" class="profile__element profile__element_type_link">Change password</a>
+      <a href=${EPathMap.editProfile} class="profile__element profile__element_type_link">Edit</a>
+      <a href=${EPathMap.editPassword} class="profile__element profile__element_type_link">Change password</a>
       <button id="logout" class="profile__element profile__element_type_btn">Logout</button>
     </div>
   </div>

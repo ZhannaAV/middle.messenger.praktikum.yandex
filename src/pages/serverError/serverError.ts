@@ -1,9 +1,9 @@
-import { ErrorPage } from '../../components/errorPage/ErrorPage';
+import { EErrorStatuses, ErrorPage } from '../../components/errorPage/ErrorPage';
 
 export class ServerErrorPage extends ErrorPage {
   protected init() {
     this.props = {
-      title: '500',
+      title: EErrorStatuses.server,
       subTitle: 'We are already fixing',
     };
   }

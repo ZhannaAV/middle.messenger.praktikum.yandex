@@ -1,22 +1,27 @@
 import { store } from '../../store/store';
-import { EStoreProperty } from '../../store/model';
 import { validateForm } from '../../utils/validation';
 import { Popup } from '../../components/Popup/Popup';
 import { popupResponseError } from '../../components/Popup/components/PopupResponceError/PopupResponseError';
-import {
-  chatsApi, IFindPersonRequestData, IManageChatPersonData, INewChatRequestData
-} from './chats.api';
+import { chatsApi, INewChatRequestBody } from './chats.api';
+import { router } from '../../utils/routing/router';
+import { EPathMap } from '../../utils/routing/model';
+import { EErrorStatuses } from '../../components/errorPage/ErrorPage';
 
-class ChatsController {
+export class ChatsController {
   public getChats() {
     chatsApi.getChats()
       .then((res: any) => {
         if (res.status === 200) {
-          store.set(EStoreProperty.chats, JSON.parse(res.response));
-          store.set(EStoreProperty.activeChatId, store.getState().chats[0].id);
+          store.setChats(JSON.parse(res.response));
+          store.setActiveChatId(store.getChats()[0].id);
           return true;
         }
-        return Promise.reject({ ...JSON.parse(res.response) });
+        return Promise.reject(res.status.toString());
+      })
+      .catch((errorStatus) => {
+        if (errorStatus === EErrorStatuses.server) {
+          router.go(EPathMap.serverError);
+        }
       });
   }
 
@@ -25,7 +30,7 @@ class ChatsController {
       isValidForm,
       filledInputs
     } = validateForm(form);
-    return isValidForm && chatsApi.createNewChat(filledInputs as INewChatRequestData)
+    return isValidForm && chatsApi.createNewChat(filledInputs as INewChatRequestBody)
       .then((res: any) => {
         if (res.status === 200) {
           return chatsController.getChats(); /* eslint-disable-line */
@@ -41,80 +46,30 @@ class ChatsController {
         if (res.status === 200) {
           return this.getChats();
         }
-        return Promise.reject({ ...JSON.parse(res.response) });
+        if (res.status === 500) {
+          return Promise.reject();
+        }
+        return true;
       })
-      .catch((e) => console.log(e));
+      .catch(() => router.go(EPathMap.serverError));
   }
 
   public changeChatAvatar(form: HTMLFormElement) {
     const { isValidForm } = validateForm(form);
     if (isValidForm) {
       const body = new FormData(form as HTMLFormElement);
-      body.append('chatId', store.getState()
-        .activeChatId
+      body.append('chatId', store.getActiveChatId()
         .toString());
       chatsApi.changeChatAvatar(body)
         .then((res: any) => {
           if (res.status === 200) {
-            const chat = JSON.parse(res.response);
-            const newChats = store.getState()
-              .chats
-              .map((item) => (item.id === chat.id ? {
-                ...item,
-                avatar: chat.avatar
-              } : item));
-            store.set(EStoreProperty.chats, newChats);
+            store.setChatAvatar(JSON.parse(res.response));
             return Popup.hide();
           }
           return Promise.reject({ ...JSON.parse(res.response) });
         })
         .catch((e) => popupResponseError.setError(e));
     }
-  }
-
-  public addPerson(form: HTMLFormElement) {
-    const {
-      isValidForm,
-      filledInputs
-    } = validateForm(form);
-    return isValidForm && this.findPersonByLogin(filledInputs as IFindPersonRequestData)
-      .then((body) => chatsApi.addPerson(body))
-      .then((res: any) => {
-        if (res.status === 200) {
-          return Popup.hide();
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      })
-      .catch((e) => popupResponseError.setError(e));
-  }
-
-  public deletePerson(form: HTMLFormElement) {
-    const {
-      isValidForm,
-      filledInputs
-    } = validateForm(form);
-    return isValidForm && this.findPersonByLogin(filledInputs as IFindPersonRequestData)
-      .then((body) => chatsApi.deletePerson(body))
-      .then((res: any) => {
-        if (res.status !== 200) {
-          return Popup.hide();
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      })
-      .catch((e: string) => popupResponseError.setError(e));
-  }
-
-  public findPersonByLogin(data: IFindPersonRequestData) {
-    return chatsApi.findPersonByLogin(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          return {
-            users: [JSON.parse(res.response).id],
-            chatId: store.getState().activeChatId
-          } as IManageChatPersonData;
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      });
   }
 }
 

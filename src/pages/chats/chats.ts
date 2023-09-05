@@ -16,11 +16,10 @@ export class Chats extends Block<IChildren> {
     store.on(StoreEvents.ChatsUpdated, () => {
       this.setProps({
         children: {
-          chats: store.getState()
-            .chats
+          chats: store.getChats()
             .map((item) => new ChatTag({
               ...item,
-              isActive: item.id === store.getState().activeChatId
+              isActive: item.id === store.getActiveChatId()
             })),
           chat
         }

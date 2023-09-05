@@ -1,4 +1,5 @@
 import './Header.less';
+import { EPathMap } from '../../utils/routing/model';
 
 export interface IHeader {
   place: string;
@@ -7,7 +8,7 @@ export interface IHeader {
 // language=html
 export const headerTmpl = ({ place }: IHeader): string => `
     <header class="header header_${place}">
-      <a href='/'>
+      <a href=${EPathMap.home}>
         <img class='header__logo' src="/logo.svg" alt='logo'/>
       </a>
     </header>
