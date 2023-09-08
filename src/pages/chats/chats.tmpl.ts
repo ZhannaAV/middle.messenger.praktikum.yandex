@@ -8,7 +8,7 @@ export const chatsTmpl = (): string => `
     <aside class="layout__sidebar">
       <div class="layout__sidebar-top">
         <button id="layoutMenuBtn" class="layout__header-btn">
-          <img src="/Menu_button.svg" alt="chats menu button">
+<!--          <img src="/burger.svg" alt="chats menu button">-->
         </button>
         <menu class="layout__menu">
           <a class="layout__profile-link" href=${EPathMap.profile}>Profile</a>

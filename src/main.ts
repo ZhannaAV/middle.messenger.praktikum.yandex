@@ -11,6 +11,7 @@ import { Home } from './pages/home/home';
 import { PasswordProfilePage } from './pages/profile/modules/passwordProfile/passwordProfile';
 import { router } from './utils/routing/router';
 import { EPathMap } from './utils/routing/model';
+import { ERoute } from './utils/routing/route';
 
 const app = document.querySelector('#app');
 app.after(Popup.getContent());
@@ -20,10 +21,10 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(EPathMap.home, Home)
     .use(EPathMap.signin, SigninPage)
     .use(EPathMap.signup, SignupPage)
-    .use(EPathMap.profile, ProfilePage)
-    .use(EPathMap.editProfile, EditProfilePage)
-    .use(EPathMap.editPassword, PasswordProfilePage)
-    .use(EPathMap.chats, Chats)
+    .use(EPathMap.profile, ProfilePage, ERoute.protected)
+    .use(EPathMap.editProfile, EditProfilePage, ERoute.protected)
+    .use(EPathMap.editPassword, PasswordProfilePage, ERoute.protected)
+    .use(EPathMap.chats, Chats, ERoute.protected)
     .use(EPathMap.notFound, NotFoundPage)
     .use(EPathMap.serverError, ServerErrorPage)
     .start();

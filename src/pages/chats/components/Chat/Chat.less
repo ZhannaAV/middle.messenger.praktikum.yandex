@@ -1,3 +1,5 @@
+@import './src/library';
+
 .chat {
   width: 100%;
   display: flex;
@@ -12,11 +14,12 @@
     display: flex;
     background-color: #fff;
     padding: 5px 10px;
-    border-bottom: 1px solid #e8e8e8;
-    height: 30px;
+    border-bottom: 1px solid @color_input-bottom;
+    height: 45px;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    box-shadow: 2px 5px 13px @color_header-btn_focused;
   }
 
   &__header-info {
@@ -31,8 +34,8 @@
   }
 
   &__header-btn {
-    height: 20px;
-    width: 20px;
+    height: 35px;
+    width: 35px;
   }
 
   &__header-btn, &__submit-btn, &__attach-btn {
@@ -49,9 +52,9 @@
     width: 200px;
     min-height: 40px;
     position: absolute;
-    background-color: #fff;
+    background-color: @color-white;
     border-radius: 5px;
-    box-shadow: 0 0 6px 0 rgb(0 0 0 / 34%);
+    box-shadow: 0 0 6px 0 @color-shadow1;
     margin: 0;
     display: none;
     box-sizing: border-box;
@@ -73,7 +76,7 @@
   }
 
   &__header-btn:focus {
-    background-color: #efefef;
+    background-color: @color_header-btn_focused;
     border-radius: 50%;
   }
 
@@ -94,13 +97,12 @@
     }
 
     &_type_warning {
-      color: #ff4062;
+      color: @color-warning;
     }
   }
 
-
   &__content {
-    background-color: rgb(74 203 248 / 80%);
+    background-color: @color_home;
     height: 100%;
     list-style: none;
     margin: 0;
@@ -110,8 +112,8 @@
   &__form {
     height: 45px;
     padding: 5px;
-    background-color: #fff;
-    border-top: 1px solid #e8e8e8;
+    background-color: @color-white;
+    border-top: 1px solid @color_input-bottom;
     display: flex;
     box-sizing: border-box;
     align-items: center;

@@ -1,4 +1,4 @@
-import { BlockConstructable, Route } from './route';
+import { BlockConstructable, ERoute, Route } from './route';
 import { EPathMap } from './model';
 
 class Router {
@@ -22,8 +22,8 @@ class Router {
     this._rootQuery = rootQuery;
   }
 
-  public use(path: string, block: BlockConstructable) {
-    const route = new Route(path, block, this._rootQuery);
+  public use(path: string, block: BlockConstructable, isProtected: ERoute = ERoute.unProtected) {
+    const route = new Route(path, block, this._rootQuery, isProtected);
     this._routes.push(route);
     return this;
   }
@@ -39,7 +39,15 @@ class Router {
   private _onRoute(path: string) {
     const route = this._getRoute(path);
     if (!route) {
-      this.go(EPathMap.notFound);
+      return this.go(EPathMap.notFound);
+    }
+
+    if (route.isProtected && localStorage.getItem('auth') === 'false') {
+      return this.go(EPathMap.signin);
+    }
+
+    if ((path === EPathMap.signin || path === EPathMap.signup) && localStorage.getItem('auth') === 'true') {
+      return this.go(EPathMap.chats);
     }
 
     if (this._currentRoute) {
@@ -47,25 +55,16 @@ class Router {
     }
 
     this._currentRoute = route;
-    route.render();
+    return route.render();
   }
 
   public go(path: string) {
     this._history.pushState({}, '', path);
-    console.log(this._history);
     this._onRoute(path);
   }
 
   private _getRoute(path: string) {
     return this._routes.find((route) => route.match(path));
-  }
-
-  public back() {
-    window.history.back();
-  }
-
-  public forward() {
-    window.history.forward();
   }
 }
 

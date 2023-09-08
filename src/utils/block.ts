@@ -109,6 +109,7 @@ export class Block<P extends Record<string, any> = any> {
     if (this._element) this._element.replaceWith(el as HTMLElement);
     this._element = el as HTMLElement;
     this._addEvents();
+    this.dispatchComponentDidMount();
   }
 
   // Может переопределять пользователь, необязательно трогать

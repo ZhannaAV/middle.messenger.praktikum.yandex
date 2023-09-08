@@ -27,10 +27,11 @@ class ProfileController {
       .then((res: any) => {
         if (res.status === 200) {
           store.reset();
-          return router.go(EPathMap.signin);
+          return localStorage.setItem('auth', 'false');
         }
         return Promise.reject(res.status.toString());
       })
+      .then(() => router.go(EPathMap.signin))
       .catch((errorStatus) => {
         if (errorStatus === EErrorStatuses.server) {
           router.go(EPathMap.serverError);

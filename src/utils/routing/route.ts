@@ -10,6 +10,11 @@ function render(query: string, block: Block) {
   return root;
 }
 
+export enum ERoute {
+  protected = 1,
+  unProtected = 0
+}
+
 export class Route {
   private _block: Block | null = null;
 
@@ -19,16 +24,13 @@ export class Route {
 
   private readonly _rootQuery: string;
 
-  constructor(path: string, Class: BlockConstructable, rootQuery: string) {
+  public readonly isProtected: ERoute;
+
+  constructor(path: string, Class: BlockConstructable, rootQuery: string, isProtected: ERoute) {
     this._path = path;
     this._blockClass = Class;
     this._rootQuery = rootQuery;
-  }
-
-  public navigate(path: string) {
-    if (this.match(path)) {
-      this.render();
-    }
+    this.isProtected = isProtected;
   }
 
   public match(path: string) {
