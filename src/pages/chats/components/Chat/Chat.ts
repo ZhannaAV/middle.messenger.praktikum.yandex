@@ -11,7 +11,7 @@ import { EPopupForms } from '../../../../components/Popup/constants/popupFormsCo
 import { chatController } from './chat.controller';
 
 interface IChat {
-  chatId: number
+  chatId: number;
 }
 
 type TChat = IChat & IChildren;
@@ -24,10 +24,10 @@ export class Chat extends Block<TChat> {
     });
   }
 
-  protected manageChat(e:TEvent): void {
+  protected manageChat(e: TEvent): void {
     const chatMenu = document.querySelector('.chat__menu_type_header');
     const attachMenu = document.querySelector('.chat__menu_type_attach');
-    const toggleMenu = (menu: Element) => menu.classList.toggle('chat__menu_opened');
+    const toggleMenu = (menu: Element | null) => menu && menu.classList.toggle('chat__menu_opened');
 
     switch (e.target.id) {
       case EChatButtons.deleteChat:
@@ -62,7 +62,7 @@ export class Chat extends Block<TChat> {
         toggleMenu(chatMenu);
         break;
       case 'attachBtn':
-        attachMenu.classList.toggle('chat__menu_opened');
+        if (attachMenu) attachMenu.classList.toggle('chat__menu_opened');
         break;
       default:
         break;

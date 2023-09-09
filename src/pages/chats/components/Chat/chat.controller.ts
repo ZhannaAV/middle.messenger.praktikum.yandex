@@ -7,6 +7,7 @@ import { EPathMap } from '../../../../utils/routing/model';
 import { validateForm } from '../../../../utils/validation';
 import { Popup } from '../../../../components/Popup/Popup';
 import { popupResponseError } from '../../../../components/Popup/components/PopupResponceError/PopupResponseError';
+import { IUser } from '../../../../store/model';
 
 class ChatController extends ChatsController {
   public getChatTokens() {
@@ -30,7 +31,7 @@ class ChatController extends ChatsController {
       .then((res: any) => {
         if (res.status === 200) {
           const identicalLoginPerson = JSON.parse(res.response)
-            .find((person) => person.login === data.login);
+            .find((person: IUser) => person.login === data.login);
           if (identicalLoginPerson) {
             return {
               users: [identicalLoginPerson.id],

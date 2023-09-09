@@ -11,7 +11,7 @@ class Router {
 
   private _history = window.history;
 
-  private readonly _rootQuery: string;
+  private readonly _rootQuery: string = '';
 
   constructor(rootQuery: string) {
     if (Router._instance) {

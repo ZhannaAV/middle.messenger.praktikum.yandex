@@ -5,8 +5,9 @@ import { IChildren, IErrorResponse, TEvent } from '../../../../models/models';
 import { validateField, validateForm } from '../../../../utils/validation';
 import { profileController } from '../../profile.controller';
 import { passwordInputFields, profileInputFields } from '../ProfileInputField/ProfileInputField';
+import { TProfileRequestData } from '../../profile.api';
 
-type TEditProfileForm = IProfileForm & IChildren & { apiMethod: (data) => Promise<unknown> };
+type TEditProfileForm = IProfileForm & IChildren & { apiMethod: (data: TProfileRequestData) => Promise<unknown> };
 
 export class ProfileForm extends Block<TEditProfileForm> {
   handleSubmit(e: TEvent<HTMLFormElement>) {
@@ -16,7 +17,7 @@ export class ProfileForm extends Block<TEditProfileForm> {
       filledInputs
     } = validateForm(e.currentTarget);
     if (isValidForm) {
-      this.props.apiMethod(filledInputs)
+      this.props.apiMethod(filledInputs as TProfileRequestData)
         .catch((err: IErrorResponse) => this.setProps({ error: err.reason }));
     }
   }

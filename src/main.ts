@@ -14,7 +14,7 @@ import { EPathMap } from './utils/routing/model';
 import { ERoute } from './utils/routing/route';
 
 const app = document.querySelector('#app');
-app.after(Popup.getContent());
+if (app) app.after(Popup.getContent());
 
 window.addEventListener('DOMContentLoaded', async () => {
   router

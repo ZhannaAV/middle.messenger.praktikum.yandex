@@ -1,6 +1,6 @@
 import { Block } from '../block';
 
-export interface BlockConstructable<P = any> {
+export interface BlockConstructable<P extends Record<string, any> = any> {
   new(props: P): Block<P>;
 }
 
@@ -22,7 +22,7 @@ export class Route {
 
   private readonly _blockClass: BlockConstructable;
 
-  private readonly _rootQuery: string;
+  private readonly _rootQuery: string = '';
 
   public readonly isProtected: ERoute;
 

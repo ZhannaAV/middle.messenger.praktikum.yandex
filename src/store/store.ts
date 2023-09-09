@@ -1,5 +1,10 @@
 import { EventBus } from '../utils/eventBus';
-import { EStoreProperty, IChatTag, IStore } from './model';
+import {
+  EStoreProperty,
+  IChatTag,
+  IStore,
+  IUser
+} from './model';
 
 export enum StoreEvents {
   ChatsUpdated = 'chatsUpdated',
@@ -14,8 +19,7 @@ export enum StoreEvents {
  * @param path
  * @param value
  */
-function set(object: IStore, path: string, value: unknown): Record<string, any> {
-  if (typeof path !== 'string') throw new Error('path must be string');
+function set(object: IStore, path: string, value: unknown):IStore {
   if (typeof object === 'object') {
     path.split('.')
       .reduce((acc, el, inx) => {
@@ -74,12 +78,12 @@ class Store extends EventBus {
     return this.state.activeChatId;
   }
 
-  public setToken(token) {
+  public setToken(token: string) {
     this.set(EStoreProperty.token, token);
     this.emit(StoreEvents.TokenUpdated);
   }
 
-  public setUser(user) {
+  public setUser(user: IUser) {
     this.set(EStoreProperty.user, user);
     this.emit(StoreEvents.UserUpdated);
   }
@@ -88,7 +92,7 @@ class Store extends EventBus {
     return this.state.user;
   }
 
-  public setChats(chats) {
+  public setChats(chats: IChatTag[]) {
     this.set(EStoreProperty.chats, chats);
     this.emit(StoreEvents.ChatsUpdated);
   }
@@ -97,7 +101,7 @@ class Store extends EventBus {
     return this.state.chats;
   }
 
-  public setChatAvatar(chat) {
+  public setChatAvatar(chat: IChatTag) {
     const newChats = this.getChats()
       .map((item) => (item.id === chat.id ? {
         ...item,

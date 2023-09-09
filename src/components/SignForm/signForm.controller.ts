@@ -5,7 +5,7 @@ import { EPathMap } from '../../utils/routing/model';
 export type ISignRequestData = ISignupRequestData | ISigninRequestData
 
 export function handleAuthorization(
-  apiMethod: (data) => Promise<unknown>,
+  apiMethod: (data: ISignRequestData) => Promise<unknown>,
   data: ISignRequestData,
   form: HTMLFormElement
 ) {

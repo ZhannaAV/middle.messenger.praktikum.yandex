@@ -3,21 +3,30 @@ import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
 import { store, StoreEvents } from '../../../../store/store';
 
-export enum EInfoFields {
-  Email = 'email',
-  Login = 'login',
-  Name = 'first_name',
-  Surname = 'second_name',
-  'Display name' = 'display_name',
-  Phone = 'phone'
+export enum ELabel {
+  email = 'Email',
+  login = 'Login',
+  first_name = 'Name',
+  second_name = 'Surname',
+  display_name = 'Display name',
+  phone = 'Phone',
 }
+
+export const EInfoFields = {
+  [ELabel.email]: 'email',
+  [ELabel.login]: 'login',
+  [ELabel.first_name]: 'first_name',
+  [ELabel.second_name]: 'second_name',
+  [ELabel.display_name]: 'display_name',
+  [ELabel.phone]: 'phone'
+};
 
 export class ProfileInfoField extends Block<IProfileInfoField> {
   constructor(props: IProfileInfoField) {
     super(props);
 
     store.on(StoreEvents.UserUpdated, () => {
-      this.setProps({ value: store.getUser()[EInfoFields[this.props.label]] });
+      this.setProps({ value: store.getUser()[EInfoFields[this.props.label as ELabel]] });
     });
   }
 
@@ -26,12 +35,12 @@ export class ProfileInfoField extends Block<IProfileInfoField> {
   }
 }
 
-export const emailInfoField = new ProfileInfoField({ label: 'Email' });
-export const loginInfoField = new ProfileInfoField({ label: 'Login' });
-export const nameInfoField = new ProfileInfoField({ label: 'Name' });
-export const surnameInfoField = new ProfileInfoField({ label: 'Surname' });
-export const displayNameInfoField = new ProfileInfoField({ label: 'Display name' });
-export const phoneInfoField = new ProfileInfoField({ label: 'Phone' });
+export const emailInfoField = new ProfileInfoField({ label: ELabel.email });
+export const loginInfoField = new ProfileInfoField({ label: ELabel.login });
+export const nameInfoField = new ProfileInfoField({ label: ELabel.first_name });
+export const surnameInfoField = new ProfileInfoField({ label: ELabel.second_name });
+export const displayNameInfoField = new ProfileInfoField({ label: ELabel.display_name });
+export const phoneInfoField = new ProfileInfoField({ label: ELabel.phone });
 
 export const profileInfoFields = [
   emailInfoField,

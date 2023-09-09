@@ -29,7 +29,7 @@ export class Chats extends Block<IChildren> {
 
   protected manageChatsMenu(e: TEvent): void {
     const menu = document.querySelector('.layout__menu');
-    const toggleMenu = () => menu.classList.toggle('layout__menu_opened');
+    const toggleMenu = () => menu && menu.classList.toggle('layout__menu_opened');
 
     if (e.target.id === 'layoutMenuBtn') {
       toggleMenu();

@@ -1,5 +1,5 @@
 export class EventBus {
-  private listeners: Record<string, Array<(...args) => void>> = {};
+  private listeners: Record<string, Array<() => void>> = {};
 
   on(event: string, callback: () => void) {
     if (!this.listeners[event]) {
@@ -17,11 +17,11 @@ export class EventBus {
     this.listeners[event] = this.listeners[event].filter((listener) => listener !== callback);
   }
 
-  emit(event: string, ...args) {
+  emit(event: string) {
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);
     }
 
-    this.listeners[event].forEach((listener) => listener(...args));
+    this.listeners[event].forEach((listener) => listener());
   }
 }

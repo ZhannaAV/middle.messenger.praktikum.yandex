@@ -6,7 +6,7 @@ import { IChildren, IErrorResponse, TEvent } from '../../models/models';
 import { validateField, validateForm } from '../../utils/validation';
 import { inputTypeConfig } from '../../constants/inputTypeConfig';
 import { ISigninRequestData, ISignupRequestData, signFormApi } from './signForm.api';
-import { handleAuthorization } from './signForm.controller';
+import { handleAuthorization, ISignRequestData } from './signForm.controller';
 
 const formSigninConfig = {
   formName: 'signin-form',
@@ -18,7 +18,7 @@ const formSignupConfig = {
   submitBtnText: 'Sign up',
 };
 
-type TSignForm = ISignForm & IChildren & { apiMethod: (data) => Promise<unknown> }
+type TSignForm = ISignForm & IChildren & { apiMethod: (data: ISignRequestData) => Promise<unknown> }
 
 class SignForm extends Block<TSignForm> {
   init() {

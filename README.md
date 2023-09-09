@@ -26,12 +26,12 @@ Typical messenger application for browser version.
 
 ### Links to pages
 
-- *[Home](https://my-messenger-for-fun.netlify.app/)*,
-- *[Signin](https://my-messenger-for-fun.netlify.app/signin)*,
-- *[Signup](https://my-messenger-for-fun.netlify.app/signup)*,
-- *[Chats](https://my-messenger-for-fun.netlify.app/chats)*,
-- *[Profile](https://my-messenger-for-fun.netlify.app/profile)*.
-- *[Profile/edit](https://my-messenger-for-fun.netlify.app/profile/edit)*.
-- *[Profile/password](https://my-messenger-for-fun.netlify.app/profile/changePassword)*.
+- *[Home](https://my-messenger-for-fun.netlify.app/home)*,
+- *[Signin](https://my-messenger-for-fun.netlify.app)*,
+- *[Signup](https://my-messenger-for-fun.netlify.app/sign-up)*,
+- *[Chats](https://my-messenger-for-fun.netlify.app/messenger)*,
+- *[Profile](https://my-messenger-for-fun.netlify.app/settings)*.
+- *[Profile/edit](https://my-messenger-for-fun.netlify.app/settings/edit)*.
+- *[Profile/password](https://my-messenger-for-fun.netlify.app/settings/password)*.
 - *[404](https://my-messenger-for-fun.netlify.app/404)*.
 - *[500](https://my-messenger-for-fun.netlify.app/500)*.

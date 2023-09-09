@@ -1,10 +1,11 @@
 import { TEvent } from '../models/models';
+import { IIndex } from '../store/model';
 
 const getErrorElement = (input: HTMLInputElement): Element => {
-  if (input.nextElementSibling?.tagName === 'SPAN') {
-    return input.nextElementSibling;
+  if (input.nextElementSibling?.tagName !== 'SPAN' && input.parentElement) {
+    <Element>input.parentElement.nextElementSibling;
   }
-  return input.parentElement.nextElementSibling;
+  return <Element>input.nextElementSibling;
 };
 
 const validateInput = (input: HTMLInputElement): boolean => {
@@ -37,19 +38,17 @@ interface IValidationResult {
 
 export const validateForm = (form: HTMLFormElement): IValidationResult => {
   const { elements } = form;
-  const filledInputs: Record<string, string> = {};
+  const filledInputs: IIndex = {};
   const isValidForm = Array.from(elements)
     .reduce((isValid, el) => {
       if (el instanceof HTMLInputElement) {
         if (el.name === 'password_again') {
           el.setAttribute('pattern', `^${filledInputs.password || filledInputs.newPassword}$`);
-        } else if (el.value) filledInputs[el.getAttribute('name')] = el.value;
+        } else if (el.getAttribute('name') && el.value) filledInputs[el.getAttribute('name') as string] = el.value;
         return validateInput(el);
       }
       return isValid;
     }, true);
-  console.log(filledInputs);
-  console.log(isValidForm);
 
   return {
     isValidForm,

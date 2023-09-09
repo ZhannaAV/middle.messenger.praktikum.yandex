@@ -14,6 +14,8 @@ export interface IEditProfileRequestData {
   phone: string;
 }
 
+export type TProfileRequestData = IEditProfileRequestData | IChangePasswordRequest
+
 const headers = {
   'Content-Type': 'application/json',
 };

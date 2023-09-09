@@ -22,9 +22,9 @@ export const chatTagTmpl = ({
     <img id="chatAvatar" class="tag__avatar" src=${avatar ? `${rootUrl}/resources${avatar}` : '/logo.svg'} alt="chat avatar">
     <div class="tag__text">
       <h3 class="tag__title">${title}</h3>
-      <p class="tag__last-autor">${checkLastAuthor(last_message?.user?.login) ? 'You:' : ''}<span
+      <p class="tag__last-autor">${checkLastAuthor(last_message?.user?.login as string) ? 'You:' : ''}<span
         class="tag__last-message">${last_message?.content || ''}</span></p>
     </div>
-    <p class="tag__last-time">${convertDate(last_message?.time) || ''}</p>
+    <p class="tag__last-time">${convertDate(last_message?.time as string) || ''}</p>
   </li>
 `;
