@@ -2,7 +2,8 @@ export enum EStoreProperty {
   user = 'user',
   chats = 'chats',
   activeChatId = 'activeChatId',
-  token = 'activeChat/token'
+  chatPersons = 'activeChat.persons',
+  token = 'activeChat.token',
 }
 
 export interface IIndex<P = any> {
@@ -35,7 +36,7 @@ export interface IChatTag {
   last_message: ILastMessage,
 }
 
-interface IPerson extends Omit<IUser, 'email' | 'phone'> {
+export interface IPerson extends Omit<IUser, 'email' | 'phone'> {
   role: string;
 }
 

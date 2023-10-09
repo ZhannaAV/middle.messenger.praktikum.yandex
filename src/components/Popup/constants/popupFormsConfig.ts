@@ -2,7 +2,6 @@ export enum EPopupForms {
   avatar = 'AvatarForm',
   newChat = 'newChatForm',
   addPerson = 'addPersonForm',
-  deletePerson = 'deletePersonForm',
 }
 
 interface IPopupFormConfig {
@@ -37,15 +36,6 @@ export const popupFormsConfig: Record<string, IPopupFormConfig> = {
   [EPopupForms.addPerson]: {
     title: 'Add person',
     btnText: 'Add',
-    type: 'text',
-    inputName: 'login',
-    label: 'Login',
-    specialAttributeTitle: 'pattern',
-    specialAttributeValue: '(?=.*[a-z]|[A-Z])[a-zA-Z0-9\\-_]{3,20}'
-  },
-  [EPopupForms.deletePerson]: {
-    title: 'Delete person',
-    btnText: 'Delete',
     type: 'text',
     inputName: 'login',
     label: 'Login',

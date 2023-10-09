@@ -1,14 +1,7 @@
 import './Chat.less';
+import '../../chats.less';
 import { store } from '../../../../store/store';
-
-export enum EChatButtons {
-  chatMenu = 'chatMenuBtn',
-  addAttachmentMenu = 'addAttachmenMenutBtn',
-  deleteChat = 'deleteChatBtn',
-  changeChatAvatar = 'changeChatAvatarBtn',
-  addPerson = 'addPersonBtn',
-  deletePerson = 'deletePersonBtn'
-}
+import { EChatButtons } from '../../models/models';
 
 const getChatTitle = () => store.getChats()
   .find((item) => item.id === store.getActiveChatId())?.title;
@@ -19,15 +12,13 @@ export const chatTmpl = (): string => `
     <div class="chat__header">
       <div class="chat__header-info">
         <h3 class="chat__name">${getChatTitle() || ''}</h3>
-        <span>${store.getChatPersonsCount() || 1} players</span>
+        <div data-personsMenu></div>
       </div>
-      <button id=${EChatButtons.chatMenu} class="chat__header-btn">
+      <button id=${EChatButtons.chatMenu} class="chat__header-btn" type="button">
         <img src="/Menu_button.svg" alt="menu button">
       </button>
-      <menu class="chat__menu chat__menu_type_header">
+      <menu class="chat__menu menu menu_type_header">
         <button id=${EChatButtons.changeChatAvatar} class="chat__menu-btn" type="button">Change chat avatar</button>
-        <button id=${EChatButtons.addPerson} class="chat__menu-btn" type="button">Add person</button>
-        <button id=${EChatButtons.deletePerson} class="chat__menu-btn" type="button">Delete person</button>
         <button id=${EChatButtons.deleteChat} class="chat__menu-btn chat__menu-btn_type_warning"
                 type="button">Delete chat
         </button>
@@ -44,7 +35,7 @@ export const chatTmpl = (): string => `
       <button class="chat__submit-btn" type="submit">
         <img src="/Arrow_right.svg" alt="send button">
       </button>
-      <menu class="chat__menu chat__menu_type_attach">
+      <menu class="chat__menu menu menu_type_attach">
         <button class="chat__menu-btn" type="button">foto/video</button>
         <button class="chat__menu-btn" type="button">file</button>
         <button class="chat__menu-btn" type="button">location</button>

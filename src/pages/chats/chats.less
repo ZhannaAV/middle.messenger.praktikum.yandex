@@ -106,3 +106,34 @@
     padding: 45px 0 0;
   }
 }
+
+.menu {
+  width: 250px;
+  min-height: 40px;
+  position: absolute;
+  background-color: @color-white;
+  border-radius: 5px;
+  box-shadow: 0 0 6px 0 @color-shadow1;
+  margin: 0;
+  display: none;
+  box-sizing: border-box;
+  padding: 5px;
+
+  &_type_header {
+    right: 10px;
+    top: 35px;
+  }
+
+  &_type_attach {
+    top: -75px;
+    left: 10px;
+  }
+
+  &_type_persons {
+    top: 35px;
+  }
+
+  &_opened {
+    display: block;
+  }
+}

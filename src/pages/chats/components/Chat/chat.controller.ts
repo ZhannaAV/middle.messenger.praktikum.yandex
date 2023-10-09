@@ -44,6 +44,17 @@ class ChatController extends ChatsController {
       });
   }
 
+  public getChatPersons() {
+    return chatApi.getChatPersons(store.getActiveChatId())
+      .then((res: any) => {
+        if (res.status === 200) {
+          store.setChatPersons(JSON.parse(res.response));
+          return true;
+        }
+        return Promise.reject({ ...JSON.parse(res.response) });
+      });
+  }
+
   public addPerson(form: HTMLFormElement) {
     const {
       isValidForm,
@@ -54,27 +65,27 @@ class ChatController extends ChatsController {
       .then((body) => chatApi.addPerson(body))
       .then((res: any) => {
         if (res.status === 200) {
-          return Popup.hide();
+          Popup.hide();
+          // eslint-disable-next-line no-use-before-define
+          return chatController.getChatPersons();
         }
         return Promise.reject({ ...JSON.parse(res.response) });
       })
       .catch((e) => popupResponseError.setError(e));
   }
 
-  public deletePerson(form: HTMLFormElement) {
-    const {
-      isValidForm,
-      filledInputs
-    } = validateForm(form);
-    return isValidForm && this.findPersonByLogin(filledInputs as IFindPersonRequestBody)
-      .then((body) => chatApi.deletePerson(body))
+  public deletePerson(personId: number) {
+    chatApi.deletePerson({
+      users: [personId],
+      chatId: store.getActiveChatId(),
+    })
       .then((res: any) => {
         if (res.status === 200) {
-          return Popup.hide();
+          return this.getChatPersons();
         }
         return Promise.reject({ ...JSON.parse(res.response) });
       })
-      .catch((e: string) => popupResponseError.setError(e));
+      .catch((e: string) => console.log(e));
   }
 }
 

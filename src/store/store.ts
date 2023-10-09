@@ -1,9 +1,6 @@
 import { EventBus } from '../utils/eventBus';
 import {
-  EStoreProperty,
-  IChatTag,
-  IStore,
-  IUser
+  EStoreProperty, IChatTag, IPerson, IStore, IUser
 } from './model';
 
 export enum StoreEvents {
@@ -11,6 +8,7 @@ export enum StoreEvents {
   ActiveChatIdUpdated = 'activeChatIdUpdated',
   TokenUpdated = 'TokenUpdated',
   UserUpdated = 'userUpdated',
+  ChatPersonsUpdated = 'chatPersonsUpdated '
 }
 
 /**
@@ -19,7 +17,7 @@ export enum StoreEvents {
  * @param path
  * @param value
  */
-function set(object: IStore, path: string, value: unknown):IStore {
+function set(object: IStore, path: string, value: unknown): IStore {
   if (typeof object === 'object') {
     path.split('.')
       .reduce((acc, el, inx) => {
@@ -65,8 +63,13 @@ class Store extends EventBus {
     this.emit(StoreEvents.UserUpdated);
   }
 
-  public getChatPersonsCount() {
-    return this.state.activeChat.persons.length;
+  public getChatPersons() {
+    return this.state.activeChat.persons;
+  }
+
+  public setChatPersons(persons: IPerson[]) {
+    this.set(EStoreProperty.chatPersons, persons);
+    this.emit(StoreEvents.ChatPersonsUpdated);
   }
 
   public setActiveChatId(id: number) {

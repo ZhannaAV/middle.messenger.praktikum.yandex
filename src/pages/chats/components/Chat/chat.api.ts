@@ -19,6 +19,10 @@ class ChatApi extends ChatsApi {
     return httpRequest.post(`${this._commonUrlPart}/token/${chatId}`, {});
   }
 
+  public getChatPersons(chatId: number) {
+    return httpRequest.get(`${this._commonUrlPart}/${chatId}/users`, {});
+  }
+
   public findPersonByLogin(data:IFindPersonRequestBody) {
     return httpRequest.post('/user/search', { data: JSON.stringify(data), headers });
   }

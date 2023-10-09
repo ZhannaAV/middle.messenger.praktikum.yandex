@@ -19,7 +19,7 @@ export const chatTagTmpl = ({
   isActive = false,
 }: IChatTagTmpl): string => `
   <li class="tag ${isActive && 'tag_active'}">
-    <img id="chatAvatar" class="tag__avatar" src=${avatar ? `${rootUrl}/resources${avatar}` : '/logo.svg'} alt="chat avatar">
+    <img class="tag__avatar" src=${avatar ? `${rootUrl}/resources${avatar}` : '/logo.svg'} alt="chat avatar">
     <div class="tag__text">
       <h3 class="tag__title">${title}</h3>
       <p class="tag__last-autor">${checkLastAuthor(last_message?.user?.login as string) ? 'You:' : ''}<span
