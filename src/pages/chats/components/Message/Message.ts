@@ -1,38 +1,21 @@
 import { IMessage, messageTmpl } from './message.tmpl';
 import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
-
-export const messages = [
-  {
-    text: 'Hello!',
-    time: '16:01',
-    isIncoming: false,
-    status: 'hasRead',
-  },
-  {
-    text: 'Ut pulvinar eleifend sollicitudin. Praesent vestibulum ac mi et aliquam. Sed sollicitudin purus nisi, nec sagittis ipsum porta eu. Curabitur vel cursus erat. Morbi dignissim non elit eu rutrum. Etiam non mi mauris. Nam nibh velit, sollicitudin in accumsan sed, venenatis vel ante. Integer tincidunt orci eu augue placerat, ac dapibus ante dignissim. Morbi vitae velit eget mauris fermentum volutpat id eget nisi.',
-    time: '16:02',
-    isIncoming: true,
-    status: null,
-  },
-  {
-    text: 'Go dancing',
-    time: '16:05',
-    isIncoming: false,
-    status: 'hasGet',
-  },
-];
+import { store } from '../../../../store/store';
 
 const markList: Record<string, string> = {
   hasGet: '/HasGetMark.svg',
-  hasRead: '/HasReadMark.svg',
+  is_read: '/HasReadMark.svg',
 };
 
 export const convertData = (obj: Record<string, any>): IMessage => ({
-  isIncoming: obj.isIncoming,
-  text: obj.text,
-  time: obj.time,
-  mark: obj.status && markList[obj.status],
+  isIncoming: obj.user_id !== store.getUser().id,
+  content: obj.content,
+  time: new Date(obj.time)?.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  }),
+  mark: obj.is_read ? markList.is_read : markList.hasGet,
 });
 
 export class Message extends Block<IMessage> {

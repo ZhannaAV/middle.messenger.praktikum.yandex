@@ -5,7 +5,7 @@ import { IChildren, TEvent } from '../../models/models';
 import { templator } from '../../utils/templator';
 import { chatsTmpl } from './chats.tmpl';
 import { chatsController } from './chats.controller';
-import { store, StoreEvents } from '../../store/store';
+import { store, EStoreEvents } from '../../store/store';
 import { Popup } from '../../components/Popup/Popup';
 import { EPopupForms } from '../../components/Popup/constants/popupFormsConfig';
 
@@ -13,7 +13,7 @@ export class Chats extends Block<IChildren> {
   constructor(props: IChildren) {
     super(props);
     chatsController.getChats();
-    store.on(StoreEvents.ChatsUpdated, () => {
+    store.on(EStoreEvents.ChatsUpdated, () => {
       this.setProps({
         children: {
           chats: store.getChats()

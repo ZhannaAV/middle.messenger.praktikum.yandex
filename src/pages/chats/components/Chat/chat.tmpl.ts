@@ -24,9 +24,7 @@ export const chatTmpl = (): string => `
         </button>
       </menu>
     </div>
-    <ul class="chat__content">
-      <div data-messages></div>
-    </ul>
+    <div data-messages></div>
     <form class="chat__form" name="chat">
       <button id=${EChatButtons.addAttachmentMenu} class="chat__attach-btn" type="button">
         <img src="/Attach_button.svg" alt="attach button">

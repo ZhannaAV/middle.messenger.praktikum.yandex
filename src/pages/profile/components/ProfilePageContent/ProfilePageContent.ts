@@ -2,7 +2,7 @@ import { IProfile, profilePageContentTmpl } from './profilePageContentTmpl';
 import { IChildren, TEvent } from '../../../../models/models';
 import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 import { profileController } from '../../profile.controller';
 
 type TProfile = IProfile & IChildren;
@@ -10,7 +10,7 @@ type TProfile = IProfile & IChildren;
 export class ProfilePageContent extends Block<TProfile> {
   constructor(props: TProfile | Record<string, never>) {
     super(props);
-    store.on(StoreEvents.UserUpdated, () => {
+    store.on(EStoreEvents.UserUpdated, () => {
       this.setProps({ display_name: store.getUser().display_name || store.getUser().first_name });
     });
   }

@@ -2,7 +2,7 @@ import { avatarTmpl, IAvatar } from './avatar.tmpl';
 import { Block } from '../../../../utils/block';
 import { IEvents } from '../../../../models/models';
 import { templator } from '../../../../utils/templator';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 import { Popup } from '../../../../components/Popup/Popup';
 import { profileController } from '../../profile.controller';
 import { EPopupForms } from '../../../../components/Popup/constants/popupFormsConfig';
@@ -13,7 +13,7 @@ export class Avatar extends Block<TAvatar> {
   constructor(props: TAvatar) {
     super(props);
 
-    store.on(StoreEvents.UserUpdated, () => {
+    store.on(EStoreEvents.UserUpdated, () => {
       this.setProps({ avatar: store.getUser().avatar });
     });
   }

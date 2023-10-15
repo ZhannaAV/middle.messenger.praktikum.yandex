@@ -4,6 +4,7 @@ export enum EStoreProperty {
   activeChatId = 'activeChatId',
   chatPersons = 'activeChat.persons',
   token = 'activeChat.token',
+  messages = 'messages'
 }
 
 export interface IIndex<P = any> {
@@ -42,7 +43,18 @@ export interface IPerson extends Omit<IUser, 'email' | 'phone'> {
 
 export interface IActiveChat {
   persons: IPerson[],
-  token?: string
+  token?: string,
+}
+
+export interface IMessage {
+  id: number;
+  type: string;
+  content: string;
+  time: string;
+  user_id: number;
+  is_read?: boolean;
+  chat_id?: number;
+  file?: any
 }
 
 /**
@@ -50,10 +62,12 @@ export interface IActiveChat {
  * {IChatTag[]} chats Список чатов
  * {string} activeChatId  ID выбранного чата
  * {IActiveChat} activeChat Участники текущего открытого чата
+ * {IMessage[]} messages Сообщения текущего чата
  */
 export interface IStore extends IIndex{
   user: IUser,
   chats: IChatTag[],
   activeChatId: number,
   activeChat: IActiveChat,
+  messages: IMessage[],
 }

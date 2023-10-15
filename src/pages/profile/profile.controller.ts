@@ -13,7 +13,9 @@ class ProfileController {
         if (res.status === 200) {
           store.setUser(JSON.parse(res.response));
         }
-        return Promise.reject(res.status.toString());
+        if (res.status === 401) {
+          return localStorage.setItem('auth', 'false');
+        } return Promise.reject(res.status.toString());
       })
       .catch((errorStatus) => {
         if (errorStatus === EErrorStatuses.server) {

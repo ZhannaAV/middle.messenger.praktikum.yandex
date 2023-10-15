@@ -1,20 +1,21 @@
 import { chatTmpl } from './chat.tmpl';
-import { MessageDay } from '../MessageDay/MessageDay';
 import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
 import { IChildren, TEvent } from '../../../../models/models';
-import { convertData, Message, messages } from '../Message/Message';
 import { Popup } from '../../../../components/Popup/Popup';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 import { chatsController } from '../../chats.controller';
 import { EPopupForms } from '../../../../components/Popup/constants/popupFormsConfig';
 import { chatController } from './chat.controller';
 import { personsMenu } from '../PersonsMenu/PersonsMenu';
 import { EChatButtons } from '../../models/models';
 import { toggleMenu } from '../../utils/utils';
+import { wsTransport } from '../../../../utils/api/wsTransport';
+import { messageDaysList } from '../MessageDaysList/messageDaysList';
 
 interface IChat {
   chatId: number;
+  token: string;
 }
 
 type TChat = IChat & IChildren;
@@ -22,9 +23,18 @@ type TChat = IChat & IChildren;
 export class Chat extends Block<TChat> {
   constructor(props: Partial<TChat>) {
     super(props);
-    store.on(StoreEvents.ActiveChatIdUpdated, () => {
+    store.on(EStoreEvents.ActiveChatIdUpdated, () => {
       if (this.props.chatId !== store.getActiveChatId()) this.setProps({ chatId: store.getActiveChatId() });
       chatController.getChatPersons();
+      chatController.getChatToken(store.getActiveChatId());
+    });
+
+    store.on(EStoreEvents.TokenUpdated, () => {
+      store.clearMessages();
+      wsTransport.close().then(() => wsTransport.connect())
+        .then(() => {
+          wsTransport.getOld();
+        });
     });
   }
 
@@ -58,24 +68,14 @@ export class Chat extends Block<TChat> {
 
   protected init() {
     this.props.children = {
-      messages: [
-        new MessageDay({
-          date: 'today',
-          children: {
-            messageList: [
-              new Message(convertData(messages[0])),
-              new Message(convertData(messages[1])),
-              new Message(convertData(messages[2]))
-            ]
-          }
-        })
-      ],
+      messages: messageDaysList || [],
       personsMenu
     };
+
     this.props.events = {
       submit: (e: TEvent) => {
         e.preventDefault();
-        console.log((e.target.children as any).message.value);
+        wsTransport.send({ type: 'message', content: (e.target.children as any).message.value });
       },
       click: (e: TEvent) => this.manageChat(e),
     };

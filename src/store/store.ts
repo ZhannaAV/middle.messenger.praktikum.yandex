@@ -1,14 +1,20 @@
 import { EventBus } from '../utils/eventBus';
 import {
-  EStoreProperty, IChatTag, IPerson, IStore, IUser
+  EStoreProperty,
+  IChatTag,
+  IMessage,
+  IPerson,
+  IStore,
+  IUser
 } from './model';
 
-export enum StoreEvents {
+export enum EStoreEvents {
   ChatsUpdated = 'chatsUpdated',
   ActiveChatIdUpdated = 'activeChatIdUpdated',
   TokenUpdated = 'TokenUpdated',
   UserUpdated = 'userUpdated',
-  ChatPersonsUpdated = 'chatPersonsUpdated '
+  ChatPersonsUpdated = 'chatPersonsUpdated',
+  MessagesUpdated = 'messagesUpdated',
 }
 
 /**
@@ -47,8 +53,9 @@ const initialState = {
   chats: [] as IChatTag[],
   activeChatId: 0,
   activeChat: {
-    persons: []
-  }
+    persons: [],
+  },
+  messages: []
 };
 
 class Store extends EventBus {
@@ -60,7 +67,7 @@ class Store extends EventBus {
 
   public reset() {
     this.state = initialState;
-    this.emit(StoreEvents.UserUpdated);
+    this.emit(EStoreEvents.UserUpdated);
   }
 
   public getChatPersons() {
@@ -69,12 +76,12 @@ class Store extends EventBus {
 
   public setChatPersons(persons: IPerson[]) {
     this.set(EStoreProperty.chatPersons, persons);
-    this.emit(StoreEvents.ChatPersonsUpdated);
+    this.emit(EStoreEvents.ChatPersonsUpdated);
   }
 
   public setActiveChatId(id: number) {
     this.set(EStoreProperty.activeChatId, id);
-    this.emit(StoreEvents.ActiveChatIdUpdated);
+    this.emit(EStoreEvents.ActiveChatIdUpdated);
   }
 
   public getActiveChatId() {
@@ -83,12 +90,16 @@ class Store extends EventBus {
 
   public setToken(token: string) {
     this.set(EStoreProperty.token, token);
-    this.emit(StoreEvents.TokenUpdated);
+    this.emit(EStoreEvents.TokenUpdated);
+  }
+
+  public getToken() {
+    return this.state.activeChat.token;
   }
 
   public setUser(user: IUser) {
     this.set(EStoreProperty.user, user);
-    this.emit(StoreEvents.UserUpdated);
+    this.emit(EStoreEvents.UserUpdated);
   }
 
   public getUser() {
@@ -97,7 +108,7 @@ class Store extends EventBus {
 
   public setChats(chats: IChatTag[]) {
     this.set(EStoreProperty.chats, chats);
-    this.emit(StoreEvents.ChatsUpdated);
+    this.emit(EStoreEvents.ChatsUpdated);
   }
 
   public getChats() {
@@ -111,6 +122,42 @@ class Store extends EventBus {
         avatar: chat.avatar
       } : item));
     this.setChats(newChats);
+  }
+
+  public setMessages(messages: IMessage[] | IMessage) {
+    const messageList = (Array.isArray(messages)
+      ? messages
+      : [messages as IMessage]).concat(this.state.messages) as IMessage[];
+    this.set(EStoreProperty.messages, messageList);
+    this.emit(EStoreEvents.MessagesUpdated);
+  }
+
+  public getMessages() {
+    const prev = this.state.messages[0]?.time ? new Date(this.state.messages[0].time) : '';
+    let prevDate = prev ? prev.toDateString() : 'today';
+    let inx = 0;
+    return this.state.messages.reduce((acc, item) => {
+      const a = new Date(item.time)?.toDateString();
+      if (prevDate === a) {
+        acc[inx].list.push(item);
+      } else {
+        acc.push({
+          day: a,
+          list: [item]
+        });
+        prevDate = a;
+        inx += 1;
+      }
+      return acc;
+    }, [{
+      day: prevDate,
+      list: [] as IMessage[]
+    }]);
+  }
+
+  public clearMessages() {
+    this.set(EStoreProperty.messages, []);
+    this.emit(EStoreEvents.MessagesUpdated);
   }
 }
 

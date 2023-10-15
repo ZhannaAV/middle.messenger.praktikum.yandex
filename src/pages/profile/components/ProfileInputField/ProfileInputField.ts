@@ -2,14 +2,14 @@ import { profileInputFieldTmpl } from './profileInputField.tmpl';
 import { Block } from '../../../../utils/block';
 import { IFormField } from '../../../../models/models';
 import { templator } from '../../../../utils/templator';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 import { inputTypeConfig } from '../../../../constants/inputTypeConfig';
 
 export class ProfileInputField extends Block<IFormField> {
   constructor(props: IFormField) {
     super(props);
 
-    store.on(StoreEvents.UserUpdated, () => {
+    store.on(EStoreEvents.UserUpdated, () => {
       this.setProps({ value: store.getUser()[this.props.name] });
     });
   }

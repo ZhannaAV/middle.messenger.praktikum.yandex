@@ -2,7 +2,7 @@ import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
 import { IPersonsMenu, personsMenuTmpl } from './personsMenu.tmpl';
 import { IChildren, TEvent } from '../../../../models/models';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 import { EChatButtons } from '../../models/models';
 import { toggleMenu } from '../../utils/utils';
 import { Person } from '../Person/Person';
@@ -15,7 +15,7 @@ type TPersonsMenu = IPersonsMenu & IChildren;
 class PersonsMenu extends Block<TPersonsMenu> {
   constructor(props: Partial<TPersonsMenu>) {
     super(props);
-    store.on(StoreEvents.ChatPersonsUpdated, () => {
+    store.on(EStoreEvents.ChatPersonsUpdated, () => {
       const persons = store.getChatPersons();
       this.setProps({
         count: persons.length,

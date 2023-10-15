@@ -16,7 +16,7 @@ Typical messenger application for browser version.
 
 ### Patterns
 
--Observable, Mediator, REST API
+-Observable, Mediator, REST API, WebSocket
 
 ### Usefull scripts
 
@@ -29,9 +29,9 @@ Typical messenger application for browser version.
 - *[Home](https://my-messenger-for-fun.netlify.app/home)*,
 - *[Signin](https://my-messenger-for-fun.netlify.app)*,
 - *[Signup](https://my-messenger-for-fun.netlify.app/sign-up)*,
-- *[Chats](https://my-messenger-for-fun.netlify.app/messenger)*,
-- *[Profile](https://my-messenger-for-fun.netlify.app/settings)*.
-- *[Profile/edit](https://my-messenger-for-fun.netlify.app/settings/edit)*.
-- *[Profile/password](https://my-messenger-for-fun.netlify.app/settings/password)*.
+- *[Messenger](https://my-messenger-for-fun.netlify.app/messenger)*,
+- *[Settings](https://my-messenger-for-fun.netlify.app/settings)*.
+- *[Settings/edit](https://my-messenger-for-fun.netlify.app/settings/edit)*.
+- *[Settings/password](https://my-messenger-for-fun.netlify.app/settings/password)*.
 - *[404](https://my-messenger-for-fun.netlify.app/404)*.
 - *[500](https://my-messenger-for-fun.netlify.app/500)*.

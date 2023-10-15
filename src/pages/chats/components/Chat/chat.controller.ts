@@ -10,10 +10,10 @@ import { popupResponseError } from '../../../../components/Popup/components/Popu
 import { IUser } from '../../../../store/model';
 
 class ChatController extends ChatsController {
-  public getChatTokens() {
-    return chatApi.getChatToken(store.getActiveChatId())
+  public getChatToken(chatId: number) {
+    return chatApi.getChatToken(chatId)
       .then((res: any) => {
-        if (res === 200) {
+        if (res.status === 200) {
           store.setToken(JSON.parse(res.response).token);
           return true;
         }

@@ -1,7 +1,7 @@
 import { IProfileInfoField, profileInfoFieldTmpl } from './profileInfoField.tmpl';
 import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
-import { store, StoreEvents } from '../../../../store/store';
+import { store, EStoreEvents } from '../../../../store/store';
 
 export enum ELabel {
   email = 'Email',
@@ -25,7 +25,7 @@ export class ProfileInfoField extends Block<IProfileInfoField> {
   constructor(props: IProfileInfoField) {
     super(props);
 
-    store.on(StoreEvents.UserUpdated, () => {
+    store.on(EStoreEvents.UserUpdated, () => {
       this.setProps({ value: store.getUser()[EInfoFields[this.props.label as ELabel]] });
     });
   }
