@@ -1,0 +1,18 @@
+{
+  "plugins": [
+    "stylelint-less"
+  ],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "color-no-invalid-hex": true,
+    "less/color-no-invalid-hex": true
+  },
+  "ignoreFiles": [
+    "dist/*",
+    "node_modules/*",
+    "src/**/*.ts",
+    "src/vendor/fonts/*.woff",
+    "src/vendor/fonts/*.woff2",
+    "src/vendor/normalize"
+  ]
+}

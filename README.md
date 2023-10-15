@@ -1,4 +1,4 @@
-## My messenger 
+## My messenger
 
 ---
 Education project: SPA without any frameworks.
@@ -12,22 +12,26 @@ Typical messenger application for browser version.
 
 ### Tech stack
 
--Vite, Less, Express
+-Vite, Less, Express, Typescript, ESLint & Stylelint, custom template engine
 
+### Patterns
+
+-Observable, Mediator, REST API, WebSocket
 
 ### Usefull scripts
 
 - `npm run dev` — developer mode,
 - `npm run start` — build and listening on port 3000
+- `npm run eslint:fix` — fixing linter errors
 
 ### Links to pages
 
-- *[Главная](https://my-messenger-for-fun.netlify.app/)*,
-- *[Sign in](https://my-messenger-for-fun.netlify.app/signin)*,
-- *[Sign up](https://my-messenger-for-fun.netlify.app/signup)*,
-- *[Chats](https://my-messenger-for-fun.netlify.app/chats)*,
-- *[Profile](https://my-messenger-for-fun.netlify.app/profile)*.
-- *[Profile/edit](https://my-messenger-for-fun.netlify.app/profile/edit)*.
-- *[Profile/changePassword](https://my-messenger-for-fun.netlify.app/profile/changePassword)*.
+- *[Home](https://my-messenger-for-fun.netlify.app/home)*,
+- *[Signin](https://my-messenger-for-fun.netlify.app)*,
+- *[Signup](https://my-messenger-for-fun.netlify.app/sign-up)*,
+- *[Messenger](https://my-messenger-for-fun.netlify.app/messenger)*,
+- *[Settings](https://my-messenger-for-fun.netlify.app/settings)*.
+- *[Settings/edit](https://my-messenger-for-fun.netlify.app/settings/edit)*.
+- *[Settings/password](https://my-messenger-for-fun.netlify.app/settings/password)*.
 - *[404](https://my-messenger-for-fun.netlify.app/404)*.
 - *[500](https://my-messenger-for-fun.netlify.app/500)*.

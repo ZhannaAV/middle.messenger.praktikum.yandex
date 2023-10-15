@@ -1,3 +1,5 @@
+@import './src/library';
+
 .tag {
   display: flex;
   align-items: start;
@@ -10,21 +12,26 @@
   }
 
   &_active {
-    background-color: rgba(245, 226, 39, 0.46);
+    background-color: @color_home;
   }
 
   &__avatar {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    border: 1px solid #E8E8E8;
-    background-color: #E8E8E8;
+    border: 1px solid @color_input-bottom;
+    background-color: @color_input-bottom;
   }
 
   &__text {
-    margin-left: 5px;
+    width: 100%;
+    padding: 5px;
     overflow: hidden;
-    max-width: 125px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
   }
 
   &__title {
@@ -38,11 +45,10 @@
 
   }
 
-  &__last-autor {
+  &__last-author {
+    width: 100%;
     margin: 0;
-    display: flex;
-    font-size: 11px;
-
+    padding-top: 3px;
   }
 
   &__last-message {
@@ -52,14 +58,12 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-
+    display: inline;
   }
 
   &__last-time {
     color: #999;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: auto;
+    margin: 0;
     font-size: 12px;
   }
 }
