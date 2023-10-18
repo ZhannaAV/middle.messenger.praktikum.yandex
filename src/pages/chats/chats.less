@@ -1,0 +1,139 @@
+@import './src/library';
+
+.layout {
+  display: flex;
+
+  &__sidebar {
+    width: 350px;
+    height: 100vh;
+    background-color: @color-white;
+    border-right: 1px solid @color_input-bottom;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: transparent;
+    }
+  }
+
+  &__sidebar-top {
+    display: flex;
+    align-items: center;
+    height: 45px;
+    padding: 0 5px;
+    position: fixed;
+    background: @color-white;
+  }
+
+  &__header-btn {
+    height: 30px;
+    width: 30px;
+    border: none;
+    cursor: pointer;
+    background: transparent url("/logo.svg") no-repeat center; /* stylelint-disable-line */
+    background-size: contain;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__menu {
+    width: 160px;
+    min-height: 40px;
+    position: absolute;
+    background-color: @color-white;
+    border-radius: 5px;
+    box-shadow: 0 0 6px 0 @color-shadow1;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    box-sizing: border-box;
+    padding: 5px;
+    left: 5px;
+    top: 35px;
+    font-size: 14px;
+    line-height: 17px;
+    visibility: hidden;
+
+    &_opened {
+      visibility: visible;
+    }
+  }
+
+  &__profile-link {
+    text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+    padding: 7px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &__menu-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 7px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &__search-input {
+    margin-left: 10px;
+    background-color: @color_header-btn_focused;
+    border: none;
+    border-radius: 14px;
+    height: 28px;
+    padding: 2px 4px;
+    text-align: center;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__sidebar-content {
+    list-style: none;
+    margin: 0;
+    padding: 45px 0 0;
+  }
+}
+
+.menu {
+  width: 250px;
+  min-height: 40px;
+  position: absolute;
+  background-color: @color-white;
+  border-radius: 5px;
+  box-shadow: 0 0 6px 0 @color-shadow1;
+  margin: 0;
+  display: none;
+  box-sizing: border-box;
+  padding: 5px;
+
+  &_type_header {
+    right: 10px;
+    top: 35px;
+  }
+
+  &_type_attach {
+    top: -75px;
+    left: 10px;
+  }
+
+  &_type_persons {
+    top: 35px;
+  }
+
+  &_opened {
+    display: block;
+  }
+}

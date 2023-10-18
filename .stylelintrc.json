@@ -13,6 +13,6 @@
     "src/**/*.ts",
     "src/vendor/fonts/*.woff",
     "src/vendor/fonts/*.woff2",
-    "src/vendor/normalize*.css"
+    "src/vendor/normalize"
   ]
 }

@@ -2,25 +2,53 @@ import { ISignForm, signFormTempl } from './signForm.tmpl';
 import { Block } from '../../utils/block';
 import { templator } from '../../utils/templator';
 import { SignFormField } from '../SignFormField/SignFormField';
-import { IChildren } from '../../models/models';
+import { IChildren, IErrorResponse, TEvent } from '../../models/models';
 import { validateField, validateForm } from '../../utils/validation';
 import { inputTypeConfig } from '../../constants/inputTypeConfig';
+import { ISigninRequestData, ISignupRequestData, signFormApi } from './signForm.api';
+import { handleAuthorization, ISignRequestData } from './signForm.controller';
+import { router } from '../../utils/routing/router';
+import { EPathMap } from '../../utils/routing/model';
 
-const formSigninConfig: ISignForm = {
+const formSigninConfig = {
   formName: 'signin-form',
   submitBtnText: 'Sign in',
-  isError: false,
 };
 
-const formSignupConfig: ISignForm = {
+const formSignupConfig = {
   formName: 'signup-form',
   submitBtnText: 'Sign up',
-  isError: false,
 };
 
-type TSignForm = ISignForm & IChildren
+type TSignForm = ISignForm & IChildren & { apiMethod: (data: ISignRequestData) => Promise<unknown> }
 
 class SignForm extends Block<TSignForm> {
+  init() {
+    const { apiMethod } = this.props;
+    this.props.events = {
+      submit: (e: TEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const {
+          isValidForm,
+          filledInputs,
+          form
+        } = validateForm(e.currentTarget);
+        if (isValidForm) {
+          handleAuthorization(apiMethod, filledInputs as ISigninRequestData | ISignupRequestData, form)
+            .catch((err: IErrorResponse) => {
+              if (err.reason === 'User already in system') {
+                localStorage.setItem('auth', 'true');
+                return null;
+              }
+              return err;
+            })
+            .then((err) => (err ? this.setProps({ error: err.reason }) : router.go(EPathMap.chats)));
+        }
+      },
+      focusout: (e: TEvent<HTMLInputElement>) => validateField(e),
+    };
+  }
+
   render() {
     const {
       children,
@@ -32,20 +60,18 @@ class SignForm extends Block<TSignForm> {
 
 export const FormSignin: Block = new SignForm({
   ...formSigninConfig,
+  apiMethod: (data: ISigninRequestData) => signFormApi.signin(data),
   children: {
     fields: [
       new SignFormField(inputTypeConfig.login),
       new SignFormField(inputTypeConfig.password),
     ],
   },
-  events: {
-    submit: (e:Event) => validateForm(e),
-    focusout: (e:Event) => validateField(e),
-  },
 });
 
 export const FormSignup: Block = new SignForm({
   ...formSignupConfig,
+  apiMethod: (data: ISignupRequestData) => signFormApi.signup(data),
   children: {
     fields: [
       new SignFormField(inputTypeConfig.email),
@@ -56,9 +82,5 @@ export const FormSignup: Block = new SignForm({
       new SignFormField(inputTypeConfig.password),
       new SignFormField(inputTypeConfig.passwordAgain),
     ]
-  },
-  events: {
-    submit: (e: Event) => validateForm(e),
-    focusout: (e: Event) => validateField(e),
   },
 });

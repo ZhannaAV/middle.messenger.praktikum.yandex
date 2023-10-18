@@ -12,7 +12,7 @@ export class Block<P extends Record<string, any> = any> {
 
   protected props: P;
 
-  _element: HTMLElement = null;
+  _element: HTMLElement | null = null;
 
   /**
    * @param {Object} props
@@ -22,7 +22,7 @@ export class Block<P extends Record<string, any> = any> {
   constructor(props = {}) {
     const eventBus = new EventBus();
 
-    this.props = { ...this._makePropsProxy(props as P) };
+    this.props = this._makePropsProxy(props as P);
 
     this.eventBus = () => eventBus;
 
@@ -55,23 +55,15 @@ export class Block<P extends Record<string, any> = any> {
   componentDidMount() {
   }
 
-  protected dispatchComponentDidMoun() {
+  protected dispatchComponentDidMount() {
     this.eventBus()
       .emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps: unknown, newProps: unknown) {
+  private _componentDidUpdate() {
     this._removeEvents();
-    const response = this.componentDidUpdate(oldProps, newProps);
-    if (response) {
-      this.eventBus()
-        .emit(Block.EVENTS.FLOW_RENDER);
-    }
-  }
-
-  // Может переопределять пользователь, необязательно трогать
-  protected componentDidUpdate(oldProps: unknown, newProps: unknown) {
-    return true;
+    this.eventBus()
+      .emit(Block.EVENTS.FLOW_RENDER);
   }
 
   public setProps = (nextProps: Record<string, any>) => {
@@ -91,7 +83,7 @@ export class Block<P extends Record<string, any> = any> {
 
     Object.keys(events)
       .forEach((eventName) => {
-        this._element?.addEventListener(eventName, events[eventName]);
+        if (this._element) this._element?.addEventListener(eventName, events[eventName]);
       });
   }
 
@@ -100,41 +92,37 @@ export class Block<P extends Record<string, any> = any> {
 
     Object.keys(events)
       .forEach((eventName) => {
-        this._element?.removeEventListener(eventName, events[eventName]);
+        if (this._element) this._element?.removeEventListener(eventName, events[eventName]);
       });
   }
 
   private _render() {
     const el: unknown = this.render();
+    if (this._element) this._element.replaceWith(el as HTMLElement);
     this._element = el as HTMLElement;
-
     this._addEvents();
+    this.dispatchComponentDidMount();
   }
 
   // Может переопределять пользователь, необязательно трогать
   protected render() {
-
   }
 
   public getContent() {
-    return this.element;
+    return this.element as HTMLElement;
   }
 
   private _makePropsProxy(props: P) {
+    const self = this;
     return new Proxy(props, {
       get(target: Record<string, any>, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? (value as () => void).bind(target) : value;
       },
       set(target: Record<string, any>, prop: string, value: unknown) {
-        const oldTarget = { ...target };
-
         target[prop] = value;
-
-        // Запускаем обновление компоненты
-        // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-        this.eventBus()
-          .emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
+        self.eventBus()
+          .emit(Block.EVENTS.FLOW_CDU);
         return true;
       },
       deleteProperty() {

@@ -1,35 +1,25 @@
-import { chatTagTmpl, IChatTag } from './chatTag.tmpl';
+import { chatTagTmpl, IChatTagTmpl } from './chatTag.tmpl';
 import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
+import { IEvents } from '../../../../models/models';
+import { store, EStoreEvents } from '../../../../store/store';
 
-export const ChatTagList = [
-  {
-    chatAvatar: '/public/logo.svg',
-    chatTitle: 'Vadim',
-    isLastAuthor: false,
-    lastMessage: 'Hi',
-    lastMessageTime: '22:49',
-    isActive: false,
-  },
-  {
-    chatAvatar: '/public/logo.svg',
-    chatTitle: 'Masha',
-    isLastAuthor: false,
-    lastMessage: 'Good night, see you tomorrow! It\'s been great day',
-    lastMessageTime: '00:01',
-    isActive: false,
-  },
-  {
-    chatAvatar: '/public/logo.svg',
-    chatTitle: 'Jazz-funk',
-    isLastAuthor: true,
-    lastMessage: 'Go dancing',
-    lastMessageTime: '12:46',
-    isActive: true,
-  },
-];
+type TChatTag = IChatTagTmpl & IEvents
 
-export class ChatTag extends Block<IChatTag> {
+export class ChatTag extends Block<TChatTag> {
+  constructor(props:Partial<TChatTag>) {
+    super(props);
+    store.on(EStoreEvents.ActiveChatIdUpdated, () => {
+      this.setProps({ isActive: store.getActiveChatId() === this.props.id });
+    });
+  }
+
+  init() {
+    this.props.events = {
+      click: () => store.setActiveChatId(this.props.id)
+    };
+  }
+
   protected render() {
     return templator(chatTagTmpl(this.props));
   }

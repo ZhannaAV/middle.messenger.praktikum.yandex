@@ -19,7 +19,7 @@ export const profileInputFieldTmpl = ({
              name=${name}
              ${isRequired && 'required'}
              pattern=${pattern}
-             value=${value}>
+             value=${value || ''}>
     </div>
     <span class="profile-field__input-error">${errors[name]}</span>
   </div>

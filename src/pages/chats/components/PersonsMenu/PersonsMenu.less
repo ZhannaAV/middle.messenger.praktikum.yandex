@@ -1,0 +1,41 @@
+@import './src/library';
+
+.persons {
+  &__btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &__list {
+    padding-left: 0;
+  }
+
+  &__addPerson {
+    align-items: center;
+    justify-content: center;
+
+    color: @color_label;
+    font-size: 12px;
+    display: flex;
+
+
+    button {
+      margin-left: 5px;
+      background: transparent url("/Icon_plus.svg") no-repeat center;
+      width: 25px;
+      height: 25px;
+      outline: none;
+      border: none;
+      transform: rotateZ(45deg);
+
+      svg {
+        color: #2a2c2f;
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@import url('./src/library');
+
 .popup {
   position: fixed;
   inset: 0;
@@ -5,7 +7,7 @@
   display: flex;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .6s ease-in;
+
 
   &_opened {
     opacity: 1;
@@ -16,7 +18,7 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
-    margin: 0 0 10px;
+    margin: 0 auto;
   }
 
   &__form {
@@ -31,6 +33,61 @@
     border-radius: 12px;
     color: #000;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  input{
+    &:focus {
+      outline: none;
+    }
+  }
+
+  label[for="file"] {
+    display: block;
+    text-align: center;
+    text-decoration: underline;
+    color: @color_popup;
+  }
+
+  input[type=file] {
+    width: 0;
+    height: 0;
+  }
+
+  label[for="content"] {
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 400;
+    color: @color_label;
+    margin-bottom: 5px;
+  }
+
+  input[type=content] {
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid @color_input-bottom;
+    font-size: 14px;
+    line-height: 17px;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &__input-error {
+    display: block;
+    font-size: 10px;
+    line-height: 10px;
+    font-weight: 400;
+    color: @color_warning;
+    height: 18px;
+    opacity: 0;
+    margin-top: 6px;
   }
 
   &__submit-btn {
@@ -39,9 +96,9 @@
     display: block;
     padding: 0;
     margin: 0;
-    background-color: #000;
+    background-color: @color-black;
     border: none;
-    color: #fff;
+    color: @color-white;
     border-radius: 5px;
     font-weight: 400;
     font-size: 18px;
@@ -67,6 +124,4 @@
       cursor: pointer;
     }
   }
-
-
 }

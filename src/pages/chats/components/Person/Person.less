@@ -1,0 +1,43 @@
+@import './src/library';
+
+.person {
+  display: flex;
+  align-items: center;
+
+  &__avatar {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    border: 1px solid @color_input-bottom;
+    background-color: @color_input-bottom;
+    margin-right: 10px;
+  }
+
+  &__name {
+    margin: 0;
+  }
+
+  &__role {
+    color: @color_label;
+    font-size: 12px;
+    margin-left: auto;
+  }
+
+  &__delete-btn {
+    margin-left: auto;
+    background: transparent url("/Icon_delete.svg") no-repeat center;
+    width: 25px;
+    height: 25px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  & + & {
+    margin-top: 5px;
+  }
+}

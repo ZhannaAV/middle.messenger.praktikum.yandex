@@ -1,3 +1,5 @@
+@import './src/library';
+
 .chat {
   width: 100%;
   display: flex;
@@ -12,21 +14,28 @@
     display: flex;
     background-color: #fff;
     padding: 5px 10px;
-    border-bottom: 1px solid #e8e8e8;
-    height: 30px;
+    border-bottom: 1px solid @color_input-bottom;
+    height: 45px;
     justify-content: space-between;
     align-items: center;
     position: relative;
+    box-shadow: 2px 5px 13px @color_header-btn_focused;
+  }
+
+  &__header-info {
+    display: flex;
+    align-items: end;
   }
 
   &__name {
     margin: 0;
     font-weight: 500;
+    padding-right: 10px;
   }
 
   &__header-btn {
-    height: 20px;
-    width: 20px;
+    height: 35px;
+    width: 35px;
   }
 
   &__header-btn, &__submit-btn, &__attach-btn {
@@ -39,35 +48,8 @@
     }
   }
 
-  &__menu {
-    width: 160px;
-    min-height: 40px;
-    position: absolute;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 6px 0 rgb(0 0 0 / 34%);
-    margin: 0;
-    display: none;
-    box-sizing: border-box;
-    padding: 5px;
-
-    &_type_header {
-      right: 10px;
-      top: 35px;
-    }
-
-    &_type_attach {
-      top: -75px;
-      left: 10px;
-    }
-
-    &_opened {
-      display: block;
-    }
-  }
-
   &__header-btn:focus {
-    background-color: #efefef;
+    background-color: @color_header-btn_focused;
     border-radius: 50%;
   }
 
@@ -76,7 +58,7 @@
     background-color: transparent;
     cursor: pointer;
     display: block;
-    padding: 0;
+    padding: 7px;
     margin-left: auto;
 
     &:hover {
@@ -88,24 +70,15 @@
     }
 
     &_type_warning {
-      color: #ff4062;
+      color: @color_warning;
     }
-  }
-
-
-  &__content {
-    background-color: rgb(74 203 248 / 80%);
-    height: 100%;
-    list-style: none;
-    margin: 0;
-    padding: 20px 10px;
   }
 
   &__form {
     height: 45px;
     padding: 5px;
-    background-color: #fff;
-    border-top: 1px solid #e8e8e8;
+    background-color: @color-white;
+    border-top: 1px solid @color_input-bottom;
     display: flex;
     box-sizing: border-box;
     align-items: center;

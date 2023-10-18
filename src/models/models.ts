@@ -1,7 +1,12 @@
 import { Block } from '../utils/block';
 
+export type TEvent<T extends HTMLElement = HTMLElement & HTMLFormElement & HTMLInputElement> = Event & {
+  target: T;
+  currentTarget: T;
+}
+
 export interface IEvents {
-  events?: Record<string, () => void>
+  events?: Record<string, (e:TEvent) => void>
 }
 
 export interface IChildren extends IEvents{
@@ -17,6 +22,6 @@ export interface IFormField {
   value?: string;
 }
 
-export type TEvent<T extends HTMLElement = HTMLElement> = Event & {
-  target: T
+export interface IErrorResponse {
+  reason: string
 }

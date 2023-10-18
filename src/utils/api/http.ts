@@ -1,3 +1,5 @@
+import { rootUrl } from './rootUrl';
+
 enum METHODS {
   GET = 'GET',
   POST = 'POST',
@@ -5,7 +7,7 @@ enum METHODS {
   DELETE = 'DELETE',
 }
 
-function queryStringify(data: Record<string, any>): string {
+function queryStringify(data: Record<string, any> | string): string {
   if (Object.keys(data).length === 0) return '';
   let item;
   const asw = Object.entries(data)
@@ -24,8 +26,8 @@ function queryStringify(data: Record<string, any>): string {
 }
 
 interface IMethodOptions {
-  data: Record<string, any>;
-  headers: Record<string, any>;
+  data?: XMLHttpRequestBodyInit | undefined;
+  headers?: Record<string, any>;
   timeout?: number;
 }
 
@@ -35,11 +37,20 @@ interface IOptions extends IMethodOptions {
 
 type HTTPMethod = (url: string, options?: IMethodOptions) => Promise<unknown>
 
-class Api {
-  get: HTTPMethod = (url, options) => this._request(`${url}${queryStringify(options.data)}`, {
-    ...options,
-    method: METHODS.GET
-  }, options?.timeout);
+export class Http {
+  private _url: string;
+
+  constructor(rootEndpoint: string) {
+    this._url = rootEndpoint;
+  }
+
+  get: HTTPMethod = (url, options) => {
+    const fullUrl = options?.data ? `${url}${queryStringify(options.data)}` : url;
+    return this._request(fullUrl, {
+      ...options,
+      method: METHODS.GET
+    }, options?.timeout);
+  };
 
   put: HTTPMethod = (url, options) => this._request(url, {
     ...options,
@@ -56,7 +67,7 @@ class Api {
     method: METHODS.DELETE
   }, options?.timeout);
 
-  _request = (url: string, options: IOptions, timeout = 5000) => {
+  _request = (url: string, options: IOptions, timeout = 50000) => {
     const {
       method,
       data,
@@ -65,17 +76,18 @@ class Api {
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
-      xhr.open(method, url);
+      xhr.open(method, this._url.concat('', url));
 
-      Object.entries(headers)
-        .forEach(([title, value]) => xhr.setRequestHeader(title, value));
-
+      if (headers) {
+        Object.entries(headers)
+          .forEach(([title, value]) => xhr.setRequestHeader(title, value));
+      }
       xhr.onload = () => resolve(xhr);
-
-      if (method === METHODS.GET) {
+      xhr.withCredentials = true;
+      if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(data);
       }
 
       xhr.timeout = timeout;
@@ -85,3 +97,5 @@ class Api {
     });
   };
 }
+
+export const httpRequest = new Http(`${rootUrl}`);
