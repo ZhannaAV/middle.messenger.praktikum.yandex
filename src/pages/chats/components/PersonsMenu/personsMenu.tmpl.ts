@@ -11,7 +11,7 @@ export const personsMenuTmpl = ({
   count
 }: IPersonsMenu): string => `
   <div>
-    <button id=${EChatButtons.personsMenu} class="persons__btn" type="button">${count || 1} players</button>
+    <button id=${EChatButtons.personsMenu} class="persons__btn" type="button">${count || 1} participants</button>
     <menu class="persons__menu menu menu_type_persons">
       <ul class="persons__list">
         <div data-persons></div>

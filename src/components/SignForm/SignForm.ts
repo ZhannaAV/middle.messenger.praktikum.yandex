@@ -7,6 +7,8 @@ import { validateField, validateForm } from '../../utils/validation';
 import { inputTypeConfig } from '../../constants/inputTypeConfig';
 import { ISigninRequestData, ISignupRequestData, signFormApi } from './signForm.api';
 import { handleAuthorization, ISignRequestData } from './signForm.controller';
+import { router } from '../../utils/routing/router';
+import { EPathMap } from '../../utils/routing/model';
 
 const formSigninConfig = {
   formName: 'signin-form',
@@ -33,7 +35,14 @@ class SignForm extends Block<TSignForm> {
         } = validateForm(e.currentTarget);
         if (isValidForm) {
           handleAuthorization(apiMethod, filledInputs as ISigninRequestData | ISignupRequestData, form)
-            .catch((err: IErrorResponse) => this.setProps({ error: err.reason }));
+            .catch((err: IErrorResponse) => {
+              if (err.reason === 'User already in system') {
+                localStorage.setItem('auth', 'true');
+                return null;
+              }
+              return err;
+            })
+            .then((err) => (err ? this.setProps({ error: err.reason }) : router.go(EPathMap.chats)));
         }
       },
       focusout: (e: TEvent<HTMLInputElement>) => validateField(e),

@@ -3,7 +3,7 @@ import { Block } from '../../../../utils/block';
 import { templator } from '../../../../utils/templator';
 import { IChildren, TEvent } from '../../../../models/models';
 import { Popup } from '../../../../components/Popup/Popup';
-import { store, EStoreEvents } from '../../../../store/store';
+import { EStoreEvents, store } from '../../../../store/store';
 import { chatsController } from '../../chats.controller';
 import { EPopupForms } from '../../../../components/Popup/constants/popupFormsConfig';
 import { chatController } from './chat.controller';
@@ -12,6 +12,7 @@ import { EChatButtons } from '../../models/models';
 import { toggleMenu } from '../../utils/utils';
 import { wsTransport } from '../../../../utils/api/wsTransport';
 import { messageDaysList } from '../MessageDaysList/messageDaysList';
+import { getMessage } from './utils/helpers';
 
 interface IChat {
   chatId: number;
@@ -31,7 +32,8 @@ export class Chat extends Block<TChat> {
 
     store.on(EStoreEvents.TokenUpdated, () => {
       store.clearMessages();
-      wsTransport.close().then(() => wsTransport.connect())
+      wsTransport.close()
+        .then(() => wsTransport.connect())
         .then(() => {
           wsTransport.getOld();
         });
@@ -75,7 +77,13 @@ export class Chat extends Block<TChat> {
     this.props.events = {
       submit: (e: TEvent) => {
         e.preventDefault();
-        wsTransport.send({ type: 'message', content: (e.target.children as any).message.value });
+        if (getMessage(e.target)) {
+          wsTransport.send({
+            type: 'message',
+            content: getMessage(e.target)
+          });
+          e.target.reset();
+        }
       },
       click: (e: TEvent) => this.manageChat(e),
     };

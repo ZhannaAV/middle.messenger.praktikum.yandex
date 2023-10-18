@@ -6,17 +6,17 @@ import { chatsApi, INewChatRequestBody } from './chats.api';
 import { router } from '../../utils/routing/router';
 import { EPathMap } from '../../utils/routing/model';
 import { EErrorStatuses } from '../../components/errorPage/ErrorPage';
+import { checkResponse, checkResponseWithErrorStatus } from '../../utils/helpers';
+import { IChatTag } from '../../store/model';
 
 export class ChatsController {
   public getChats() {
     chatsApi.getChats()
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.setChats(JSON.parse(res.response));
-          store.setActiveChatId(store.getChats()[0].id);
-          return true;
-        }
-        return Promise.reject(res.status.toString());
+      .then(checkResponseWithErrorStatus)
+      .then((chatTags: IChatTag[]) => {
+        store.setChats(chatTags);
+        store.setActiveChatId(store.getChats()[0].id);
+        return true;
       })
       .catch((errorStatus) => {
         if (errorStatus === EErrorStatuses.server) {
@@ -31,27 +31,20 @@ export class ChatsController {
       filledInputs
     } = validateForm(form);
     return isValidForm && chatsApi.createNewChat(filledInputs as INewChatRequestBody)
-      .then((res: any) => {
-        if (res.status === 200) {
-          return chatsController.getChats(); /* eslint-disable-line */
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      })
+      .then(checkResponse)
+      .then(() => chatsController.getChats()) /* eslint-disable-line */
       .then(() => Popup.hide());
   }
 
   public deleteChat(id: number) {
     return chatsApi.deleteChat(id)
-      .then((res: any) => {
-        if (res.status === 200) {
-          return this.getChats();
+      .then(checkResponseWithErrorStatus)
+      .then(() => this.getChats())
+      .catch((errorStatus) => {
+        if (errorStatus === EErrorStatuses.server) {
+          router.go(EPathMap.serverError);
         }
-        if (res.status === 500) {
-          return Promise.reject();
-        }
-        return true;
-      })
-      .catch(() => router.go(EPathMap.serverError));
+      });
   }
 
   public changeChatAvatar(form: HTMLFormElement) {
@@ -61,12 +54,10 @@ export class ChatsController {
       body.append('chatId', store.getActiveChatId()
         .toString());
       chatsApi.changeChatAvatar(body)
-        .then((res: any) => {
-          if (res.status === 200) {
-            store.setChatAvatar(JSON.parse(res.response));
-            return Popup.hide();
-          }
-          return Promise.reject({ ...JSON.parse(res.response) });
+        .then(checkResponse)
+        .then((tag: IChatTag) => {
+          store.setChatAvatar(tag);
+          return Popup.hide();
         })
         .catch((e) => popupResponseError.setError(e));
     }
