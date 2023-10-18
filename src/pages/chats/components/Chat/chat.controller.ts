@@ -7,18 +7,14 @@ import { EPathMap } from '../../../../utils/routing/model';
 import { validateForm } from '../../../../utils/validation';
 import { Popup } from '../../../../components/Popup/Popup';
 import { popupResponseError } from '../../../../components/Popup/components/PopupResponceError/PopupResponseError';
-import { IUser } from '../../../../store/model';
+import { IPerson, IUser } from '../../../../store/model';
+import { checkResponse, checkResponseWithErrorStatus } from '../../../../utils/helpers';
 
 class ChatController extends ChatsController {
   public getChatToken(chatId: number) {
     return chatApi.getChatToken(chatId)
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.setToken(JSON.parse(res.response).token);
-          return true;
-        }
-        return Promise.reject(res.status.toString());
-      })
+      .then(checkResponseWithErrorStatus)
+      .then((tokenRes) => store.setToken(tokenRes.token))
       .catch((errorStatus) => {
         if (errorStatus === EErrorStatuses.server) {
           router.go(EPathMap.serverError);
@@ -28,31 +24,24 @@ class ChatController extends ChatsController {
 
   public findPersonByLogin(data: IFindPersonRequestBody) {
     return chatApi.findPersonByLogin(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          const identicalLoginPerson = JSON.parse(res.response)
-            .find((person: IUser) => person.login === data.login);
-          if (identicalLoginPerson) {
-            return {
-              users: [identicalLoginPerson.id],
-              chatId: store.getActiveChatId()
-            } as IChangePersonsRequestBody;
-          }
-          return Promise.reject(`No such person with login ${data.login}. Try another one?`);
+      .then(checkResponse)
+      .then((personData) => {
+        const identicalLoginPerson = personData
+          .find((person: IUser) => person.login === data.login);
+        if (identicalLoginPerson) {
+          return {
+            users: [identicalLoginPerson.id],
+            chatId: store.getActiveChatId()
+          } as IChangePersonsRequestBody;
         }
-        return Promise.reject({ ...JSON.parse(res.response) });
+        return Promise.reject(`No such person with login ${data.login}. Try another one?`);
       });
   }
 
   public getChatPersons() {
     return chatApi.getChatPersons(store.getActiveChatId())
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.setChatPersons(JSON.parse(res.response));
-          return true;
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      });
+      .then(checkResponse)
+      .then((persons: IPerson[]) => store.setChatPersons(persons));
   }
 
   public addPerson(form: HTMLFormElement) {
@@ -63,13 +52,11 @@ class ChatController extends ChatsController {
     // eslint-disable-next-line no-use-before-define
     return isValidForm && chatController.findPersonByLogin(filledInputs as IFindPersonRequestBody)
       .then((body) => chatApi.addPerson(body))
-      .then((res: any) => {
-        if (res.status === 200) {
-          Popup.hide();
-          // eslint-disable-next-line no-use-before-define
-          return chatController.getChatPersons();
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
+      .then(checkResponse)
+      .then(() => {
+        Popup.hide();
+        // eslint-disable-next-line no-use-before-define
+        return chatController.getChatPersons();
       })
       .catch((e) => popupResponseError.setError(e));
   }
@@ -79,12 +66,8 @@ class ChatController extends ChatsController {
       users: [personId],
       chatId: store.getActiveChatId(),
     })
-      .then((res: any) => {
-        if (res.status === 200) {
-          return this.getChatPersons();
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      })
+      .then(checkResponse)
+      .then(() => this.getChatPersons())
       .catch((e: string) => console.log(e));
   }
 }

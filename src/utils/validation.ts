@@ -3,7 +3,7 @@ import { IIndex } from '../store/model';
 
 const getErrorElement = (input: HTMLInputElement): Element => {
   if (input.nextElementSibling?.tagName !== 'SPAN' && input.parentElement) {
-    <Element>input.parentElement.nextElementSibling;
+    return <Element>input.parentElement.nextElementSibling;
   }
   return <Element>input.nextElementSibling;
 };

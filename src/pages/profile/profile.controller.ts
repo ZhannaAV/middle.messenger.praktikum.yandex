@@ -5,35 +5,35 @@ import { Popup } from '../../components/Popup/Popup';
 import { validateForm } from '../../utils/validation';
 import { EPathMap } from '../../utils/routing/model';
 import { EErrorStatuses } from '../../components/errorPage/ErrorPage';
+import { checkResponse, checkResponseWithErrorStatus } from '../../utils/helpers';
+import { IUser } from '../../store/model';
 
 class ProfileController {
   public getProfileInfo() {
     profileApi.getInfo()
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.setUser(JSON.parse(res.response));
-        }
-        if (res.status === 401) {
-          return localStorage.setItem('auth', 'false');
-        } return Promise.reject(res.status.toString());
-      })
+      .then(checkResponseWithErrorStatus)
+      .then((user: IUser) => store.setUser(user))
       .catch((errorStatus) => {
-        if (errorStatus === EErrorStatuses.server) {
-          router.go(EPathMap.serverError);
+        if (errorStatus === EErrorStatuses.authorisation) {
+          return localStorage.setItem('auth', 'false');
         }
+        if (errorStatus === EErrorStatuses.server) {
+          return router.go(EPathMap.serverError);
+        }
+        return false;
       });
   }
 
   public logout() {
     profileApi.logout()
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.reset();
-          return localStorage.setItem('auth', 'false');
-        }
-        return Promise.reject(res.status.toString());
+      .then(checkResponseWithErrorStatus)
+      .then(() => {
+        store.reset();
+        return localStorage.setItem('auth', 'false');
       })
-      .then(() => router.go(EPathMap.signin))
+      .then(() => {
+        router.go(EPathMap.signin);
+      })
       .catch((errorStatus) => {
         if (errorStatus === EErrorStatuses.server) {
           router.go(EPathMap.serverError);
@@ -46,12 +46,10 @@ class ProfileController {
     const { isValidForm } = validateForm(form);
     if (isValidForm) {
       return profileApi.changeAvatar(body)
-        .then((res: any) => {
-          if (res.status === 200) {
-            store.setUser(JSON.parse(res.response));
-            return Popup.hide();
-          }
-          return Promise.reject({ ...JSON.parse(res.response) });
+        .then(checkResponse)
+        .then((user: IUser) => {
+          store.setUser(user);
+          return Popup.hide();
         });
     }
     return false;
@@ -59,23 +57,17 @@ class ProfileController {
 
   public edit(data: IEditProfileRequestData) {
     return profileApi.edit(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          store.setUser(JSON.parse(res.response));
-          return router.go(EPathMap.profile);
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
+      .then(checkResponse)
+      .then((user: IUser) => {
+        store.setUser(user);
+        return router.go(EPathMap.profile);
       });
   }
 
   public changePassword(data: IChangePasswordRequest) {
     return profileApi.changePassword(data)
-      .then((res: any) => {
-        if (res.status === 200) {
-          return router.go(EPathMap.profile);
-        }
-        return Promise.reject({ ...JSON.parse(res.response) });
-      });
+      .then(checkResponse)
+      .then(() => router.go(EPathMap.profile));
   }
 }
 
