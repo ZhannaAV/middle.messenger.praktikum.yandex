@@ -1,34 +1,18 @@
-import { ProfileForm } from '../../components/ProfileForm/ProfileForm';
-import { ProfileLayout } from '../../components/ProfileLayout/ProfileLayout';
-import { Block } from '../../../../utils/block';
-import { ProfileInputField } from '../../components/ProfileInputField/ProfileInputField';
-import { inputTypeConfig } from '../../../../constants/inputTypeConfig';
-import { validateField, validateForm } from '../../../../utils/validation';
-import { TEvent } from '../../../../models/models';
+import { profileChangePasswordForm } from '../../components/ProfileForm/ProfileForm';
+import { profileLayout, ProfileLayout } from '../../components/ProfileLayout/ProfileLayout';
+import { avatar } from '../../components/Avatar/Avatar';
 
-const passwordProfileFormConfig = {
-  formName: 'passwordProfile-profile-form',
-  isError: false,
-};
-
-export const PasswordProfilePage: Block = new ProfileLayout({
-  children: {
-    content: new ProfileForm({
-      ...passwordProfileFormConfig,
+export class PasswordProfilePage extends ProfileLayout {
+  init() {
+    profileLayout.setProps({
       children: {
-        fields: [
-          new ProfileInputField({
-            ...inputTypeConfig.password,
-            label: 'Old passwordProfile'
-          }),
-          new ProfileInputField(inputTypeConfig.newPassword),
-          new ProfileInputField(inputTypeConfig.repeatNewPasswordConfig),
-        ]
-      },
-      events: {
-        submit: (e: TEvent) => validateForm(e),
-        focusout: (e: TEvent) => validateField(e),
+        content: profileChangePasswordForm,
+        avatar
       }
-    })
+    });
   }
-});
+
+  render(): HTMLElement {
+    return profileLayout.getContent();
+  }
+}

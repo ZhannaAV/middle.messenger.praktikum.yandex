@@ -8,10 +8,10 @@ export interface IProfileInfoField {
 // language=html
 export const profileInfoFieldTmpl = ({
   label,
-  value = ''
+  value
 }: IProfileInfoField): string => `
   <li class="profile__item">
     <p class="profile__item-name">${label}</p>
-    <p class="profile__item-value">${value}</p>
+    <p class="profile__item-value">${value || ''}</p>
   </li>
 `;

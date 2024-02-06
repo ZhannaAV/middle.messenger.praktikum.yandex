@@ -1,7 +1,14 @@
-import { ErrorPage } from '../../components/errorPage/ErrorPage';
-import { Block } from '../../utils/block';
+import { EErrorStatuses, ErrorPage } from '../../components/errorPage/ErrorPage';
 
-export const NotFoundPage: Block = new ErrorPage({
-  title: '404',
-  subTitle: 'Got it wrong',
-});
+export class NotFoundPage extends ErrorPage {
+  protected init() {
+    this.props = {
+      title: EErrorStatuses.notFound,
+      subTitle: 'Got it wrong',
+    };
+  }
+
+  protected render(): HTMLElement {
+    return new ErrorPage(this.props).getContent();
+  }
+}
