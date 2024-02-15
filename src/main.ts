@@ -12,6 +12,7 @@ import { PasswordProfilePage } from './pages/profile/modules/passwordProfile/pas
 import { router } from './utils/routing/router';
 import { EPathMap } from './utils/routing/model';
 import { ERoute } from './utils/routing/route';
+import { Block } from './utils/block';
 
 const app = document.querySelector('#app');
 if (app) app.after(Popup.getContent());
@@ -29,3 +30,22 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(EPathMap.serverError, ServerErrorPage)
     .start();
 });
+
+// class Component extends Block {
+//   constructor(props) {
+//     super({ ...props });
+//   }
+//
+//   render() {
+//
+//     // language=html
+//     return `
+//           <div>
+//             <span id="test">${this.props.text}</span>
+//             <button></button>
+//           </div>`;
+//   }
+// }
+// const text = "HI"
+// const e = new Component({text})
+// console.log(e.element);

@@ -74,7 +74,7 @@ export class Block<P extends Record<string, any> = any> {
     Object.assign(this.props, nextProps);
   };
 
-  get element() {
+  get element(): HTMLElement | null {
     return this._element;
   }
 
