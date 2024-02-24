@@ -1,7 +1,7 @@
 import { BlockConstructable, ERoute, Route } from './route';
 import { EPathMap } from './model';
 
-class Router {
+export class Router {
   // eslint-disable-next-line no-use-before-define
   private static _instance: Router;
 
@@ -65,6 +65,10 @@ class Router {
 
   private _getRoute(path: string) {
     return this._routes.find((route) => route.match(path));
+  }
+
+  public getHistory() {
+    return this._history;
   }
 }
 
