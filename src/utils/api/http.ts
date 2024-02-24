@@ -1,6 +1,6 @@
 import { rootUrl } from './rootUrl';
 
-enum METHODS {
+export enum METHODS {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -28,7 +28,8 @@ function queryStringify(data: Record<string, any> | string): string {
 interface IMethodOptions {
   data?: XMLHttpRequestBodyInit | undefined;
   headers?: Record<string, any>;
-  timeout?: number;
+  timeout?: number | undefined;
+  params?: Record<string, any> | string
 }
 
 interface IOptions extends IMethodOptions {
@@ -45,33 +46,35 @@ export class Http {
   }
 
   get: HTTPMethod = (url, options) => {
-    const fullUrl = options?.data ? `${url}${queryStringify(options.data)}` : url;
+    const fullUrl = options?.params ? `${url}${queryStringify(options.params)}` : url;
+
     return this._request(fullUrl, {
       ...options,
       method: METHODS.GET
-    }, options?.timeout);
+    });
   };
 
   put: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.PUT
-  }, options?.timeout);
+  });
 
   post: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.POST
-  }, options?.timeout);
+  });
 
   delete: HTTPMethod = (url, options) => this._request(url, {
     ...options,
     method: METHODS.DELETE
-  }, options?.timeout);
+  });
 
-  _request = (url: string, options: IOptions, timeout = 50000) => {
+  _request = (url: string, options: IOptions) => {
     const {
       method,
       data,
-      headers
+      headers,
+      timeout = 50000
     } = options;
 
     return new Promise((resolve, reject) => {

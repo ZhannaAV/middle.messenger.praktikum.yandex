@@ -1,9 +1,11 @@
 import sinon from 'sinon';
-import { Block } from './block';
 import { expect } from 'chai';
+import { Block } from './block';
+import { templator } from './templator';
 
 interface Props {
   text?: string;
+  events?: Record<string, () => void>
 }
 
 describe('Block', () => {
@@ -17,12 +19,11 @@ describe('Block', () => {
       }
 
       protected render() {
-
-        return `
+        return templator(`
           <div>
             <span id=${id}>${this.props.text}</span>
             <button></button>
-          </div>`;
+          </div>`);
       }
     }
 
@@ -32,25 +33,21 @@ describe('Block', () => {
   it('Создаётся компонент с переданными пропсами', () => {
     const text = 'Hello';
     const newComponent = new ComponentClass({ text });
-
-    const element = newComponent.getContent();
-    global.document.body.innerHTML = element as string;
-    const spanText = global.document.querySelector(`#${id}`);
+    const spanText = newComponent.getContent()?.querySelector(`#${id}`)?.textContent;
 
     expect(spanText)
       .to
       .eq(text);
   });
 
-  // it('Реактивность на смену пропсов', () => {
-  //   const text = 'new test';
-  //   const newComponent = new ComponentClass({ text: 'test' });
-  //   newComponent.setProps({ text });
-  //   const spanText = newComponent.element?.querySelector(`#${id}`)?.innerHTML as unknown;
-  //
-  //   expect(spanText.to.be.eq(text));
-  //
-  // });
+  it('Реактивность на смену пропсов', () => {
+    const text = 'new test';
+    const newComponent = new ComponentClass({ text: 'test' });
+    newComponent.setProps({ text });
+    const spanText = newComponent.getContent()?.querySelector(`#${id}`)?.innerHTML as unknown;
+
+    expect(spanText).to.eq(text);
+  });
 
   it('Слушатели событий', () => {
     const handleStub = sinon.stub();
@@ -61,10 +58,15 @@ describe('Block', () => {
     });
     const event = new MouseEvent('click');
     newComponent.element?.dispatchEvent(event);
-    expect(handleStub.calledOnce).to.be.true;
+
+    expect(handleStub.calledOnce).to.be.true; // eslint-disable-line
   });
 
-  // it('Вызов dispatchComponentDidMount', () => {
-  //
-  // })
+  it('Вызов dispatchComponentDidMount', () => {
+    const newComponent = new ComponentClass({ text: 'Hi' });
+    const spyCDM = sinon.spy(newComponent, 'componentDidMount');
+    document.body.insertAdjacentElement('afterbegin', newComponent.getContent());
+
+    expect(spyCDM.calledOnce).to.be.true; // eslint-disable-line
+  });
 });

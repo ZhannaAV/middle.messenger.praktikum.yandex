@@ -20,13 +20,9 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "allowSyntheticDefaultImports": true,
-    "declaration": true
-  },
+    "allowSyntheticDefaultImports": true },
   "ts-node": {
   "esm": true,
   "experimentalSpecifierResolution": "node",
-  "transpileOnly": true
-},
-  "include": ["src"],
-}
+  "transpileOnly": true },
+  "include": ["src"] }
