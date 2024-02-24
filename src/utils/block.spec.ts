@@ -1,4 +1,4 @@
-import sinon from "sinon";
+import sinon from 'sinon';
 import { Block } from './block';
 import { expect } from 'chai';
 
@@ -33,11 +33,13 @@ describe('Block', () => {
     const text = 'Hello';
     const newComponent = new ComponentClass({ text });
 
-    const element = newComponent.element as HTMLElement;
+    const element = newComponent.getContent();
+    global.document.body.innerHTML = element as string;
+    const spanText = global.document.querySelector(`#${id}`);
 
-    const spanText = element.querySelector(`#${id}`)?.textContent
-
-    expect(spanText).to.eq(text);
+    expect(spanText)
+      .to
+      .eq(text);
   });
 
   // it('Реактивность на смену пропсов', () => {
@@ -52,12 +54,14 @@ describe('Block', () => {
 
   it('Слушатели событий', () => {
     const handleStub = sinon.stub();
-    const newComponent = new ComponentClass({events: {
-      click: handleStub
-      }})
+    const newComponent = new ComponentClass({
+      events: {
+        click: handleStub
+      }
+    });
     const event = new MouseEvent('click');
     newComponent.element?.dispatchEvent(event);
-    expect(handleStub.calledOnce).to.be.true
+    expect(handleStub.calledOnce).to.be.true;
   });
 
   // it('Вызов dispatchComponentDidMount', () => {
