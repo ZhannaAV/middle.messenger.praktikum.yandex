@@ -7,3 +7,4 @@
 .gitignore
 vite.config.js
 server.js
+.mocharc.json

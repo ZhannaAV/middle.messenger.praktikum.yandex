@@ -19,9 +19,10 @@
     "skipLibCheck": true,
     "noImplicitAny": true,
     "sourceMap": true,
-    "strictNullChecks": true
-  },
-  "include": [
-    "src"
-  ]
-}
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true },
+  "ts-node": {
+  "esm": true,
+  "experimentalSpecifierResolution": "node",
+  "transpileOnly": true },
+  "include": ["src"] }

@@ -18,11 +18,16 @@ Typical messenger application for browser version.
 
 -Observable, Mediator, REST API, WebSocket
 
+### Unit tests
+
+-Mocha, Chai, Sinon, Jsdom
+
 ### Usefull scripts
 
 - `npm run dev` — developer mode,
 - `npm run start` — build and listening on port 3000
 - `npm run eslint:fix` — fixing linter errors
+- `npm run test` — run tests in node environment
 
 ### Links to pages
 
